@@ -197,9 +197,14 @@ function requestWord(chapter,page,word,outputArr,index){
 	}
 }
 
+var nonAlphaRE = /[^A-Za-z]/;
 function requestSkulls(word,outputArr,index){
 	if(db.index[word]===undefined){
-		var req = "db/index/"+encodeWord(word)+".txt";
+		var folder = word[0];
+		if(nonAlphaRE.test(folder)){
+			folder = "0";
+		}
+		var req = "db/index/"+folder+"/"+encodeWord(word)+".txt";
 		console.log("retrieving",req);
 		var xhttp = new XMLHttpRequest();
 		xhttp.indices = [index];
