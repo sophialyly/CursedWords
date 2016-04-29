@@ -1,0 +1,391 @@
+body {
+	margin: 0px;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.page {
+	height: 100%;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.content {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: justify;
+	max-width: 900px;
+}
+
+.form {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	flex: 1 0 auto;
+	margin: 20px;
+}
+
+.gridElement {
+	width: 300px;
+	height: 200px;
+	margin: 20px;
+	flex: none;
+}
+
+textarea:focus,
+button:focus,
+.expandableHeader:focus {
+	outline: none;
+}
+
+textarea:focus,
+button:focus,
+.expandableHeader:focus:before {
+	box-shadow: 0 0 0px  1.5px #CCF;
+}
+
+textarea {
+	width: 100%;
+	height: 80%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border-radius: 5px;
+	resize: none;
+	font-family: monospace;
+}
+
+button {
+	border-radius: 5px;
+	border: 1px solid #888;
+	background: linear-gradient(to bottom, #FAFAFA 0%,#DDD 100%);
+	padding: 5px;
+	cursor: pointer;
+}
+
+button:hover {
+	background: linear-gradient(to bottom, #FAFAFF 0%,#DDF 100%);
+}
+
+.justifyHeight {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.gridElement button {
+	padding: 5px;
+	width: 100px;
+}
+
+.gridBreak {
+	width: 100%;
+	height: 0px;
+	flex: none;
+}
+
+#skullCanvas {
+	border-radius: 10px;
+	background-color: black;
+}
+
+code {
+	background-color: #EEE;
+	border: 1px solid #CCC;
+	padding: 0px 2px;
+	font-family: monospace;
+}
+
+.compact {
+	font-size: smaller;
+}
+
+.compact p , .compact li, .compact ul {
+	margin: 2px!important;
+	width: auto!important;
+}
+
+.compact h1 {
+	font-size: larger;
+	margin: 3px 0px;
+}
+
+.markupDescription {
+	margin-top: 20px;
+	display: inline-block;
+}
+
+ul {
+	list-style-type: none;
+	padding-left: 35px;
+	text-indent: -20px;
+}
+
+.markupDescription .example {
+	height: 12px;
+	margin-top: 5px;
+	font-weight: bold;
+}
+
+.markupDescription .example img {
+	margin: -4px 5px;
+}
+
+.checkboxWrapper {
+	height: auto;
+	vertical-align: top;
+	font-size: smaller;
+	margin-bottom: 10px;
+}
+
+.checkboxHighlight {
+	border-radius: 10px;
+	border: 1px solid #AAA;
+	padding: 5px;
+}
+
+.checkboxWrapper input {
+	width: 15px;
+	height: 15px;
+	margin: 0px;
+	margin-left: 9px;
+	position: relative;
+    top: 2px;
+	cursor: pointer;
+}
+
+.checkboxWrapper label {
+	padding-left: 9px;
+	font-weight: bold;
+	position: relative;
+    top: -1px;
+	cursor: pointer;
+}
+
+.checkboxWrapper p {
+	margin: 10px 0px;
+}
+
+hr {
+	margin: 0px auto;
+	width: 80%;
+}
+
+.description {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+	flex: none;
+	margin: 20px;
+}
+
+.description  * {
+	max-width: 700px;
+	width: 70%;
+}
+
+.description h1 {
+	margin: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.description p {
+	margin: 5px;
+	text-align: justify;
+}
+
+strong {
+	font-weight: bolder;
+}
+
+.tips {
+	position: relative;
+	border-radius: 10px;
+	margin: 10px;
+	width: 62%;
+	background-color: #EEE;
+	padding: 40px;
+}
+
+.tips:after {
+	content: "";
+	position:absolute;
+	top: 10px;
+	left: 10px;
+	right: 10px;
+	bottom: 10px;
+	border-radius: 10px;
+	border: 2px dashed #555;
+}
+
+.tips h1 {
+	margin: initial;
+	font-size: large;
+	text-align: left;
+}
+
+.good, .bad {
+	width: auto!important;
+	display: inline-block;
+	border-radius: 999px;
+	font-weight: bold;
+	padding: 1px 8px;
+}
+
+.good {
+	background-color: #20FF20;
+	color: #004000;
+}
+
+.bad {
+	background-color: #FF7070;
+	color: #300000;
+}
+
+.expandable {
+	width: 100%;
+	-webkit-transition: max-height 0.5s, width 0.3s 0.1s; /* Safari */
+    transition: max-height 0.5s, width 0.3s 0.1s;
+	max-height: 800px;
+	overflow: hidden;
+	margin: 20px;
+	border-radius: 10px;
+	border: 1px solid #555;
+}
+
+.expandable.minimized {
+	width: 70%;
+	max-height: 38px;
+	-webkit-transition: max-height 0.5s, width 0.2s; /* Safari */
+    transition: max-height 0.5s, width 0.2s;
+}
+
+.expandable .expandableHeader {
+	box-sizing: border-box;
+	height: 38px;
+	width: auto;
+	margin: 0px;
+	cursor: pointer;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: left;
+	padding: 5px 15px;
+	overflow: hidden;
+}
+
+.expandable .expandableHeader:before {
+	content: "Hide";
+	position: relative;
+    top: -2px;
+	display: inline-block;
+	padding: 2px;
+	margin-right: 15px;
+	width: 60px;
+	text-align: center;
+	font-size: small;
+	border-radius: 5px;
+	border: 1px solid #888;
+	background: linear-gradient(to bottom, #FAFAFA 0%,#DDD 100%);
+}
+
+.expandable .expandableHeader:hover:before {
+	background: linear-gradient(to bottom, #FAFAFF 0%,#DDF 100%);
+}
+
+.expandable.minimized .expandableHeader:before {
+	content: "Show";
+}
+
+.expandableContent {
+	overflow: hidden;
+	margin: 0px;
+	width: 100%;
+	padding: 0px;
+	border-top: 1px solid #555;
+}
+
+.expandableContent * {
+	width: auto;
+	margin: 0px;
+}
+
+.comicCodes {
+	table-layout: fixed;
+	padding: 10px 0px;
+	width: 100%;
+}
+
+.comicCodes th,
+.comicCodes td:nth-child(1),
+.comicCodes td:nth-child(4) {
+	padding: 0px 10px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.comicCodes th:nth-child(2),
+.comicCodes th:nth-child(3) {
+	width: 30%;
+}
+
+.comicCodes th:nth-child(1),
+.comicCodes th:nth-child(4) {
+	width: 20%;
+}
+
+.comicCodes .code {
+	height: 80px;
+	vertical-align: top;
+	background-color: #EEE;
+	border: 1px solid #CCC;
+	padding: 0px 2px;
+	font-family: monospace;
+	white-space: nowrap;
+	overflow: auto;
+}
+
+.comicCodes td:nth-child(3):empty {
+	background-color: #FAFAFA;
+	border: 1px solid #EEE;
+}
+
+.copyMarkupButton {
+	height: 50px;
+}
+
+ins, del {
+	margin: 0px!important;
+	text-decoration: underline;
+}
+
+del {
+	background-color: #FFC0C0;
+}
+
+ins {
+	background-color: #B0FFB0;
+}
+
+.attribution {
+	font-style: italic;
+	margin-top: 30px!important;
+	margin-bottom: 20px;
+}
+
+.attribution * {
+	margin: 0px!important;
+	width: 100%;
+	font-size: 12px;
+	text-align: right!important;
+}
+
+.attribution address {
+	font-size: 14px;
+}
+
+.tiny {
+	font-size: 2px;
+}

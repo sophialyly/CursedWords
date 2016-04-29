@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<!--
+▒▒▒░░░░░░░░░░▄▐
+▒░░░░░░▄▄▄░░▄██▄
+░░░░░░▐▀█▀▌░░░░▀█▄
+░░░░░░▐█▄█▌░░░░░░▀█▄
+░░░░░░░▀▄▀░░░▄▄▄▄▄▀▀
+░░░░░▄▄▄██▀▀▀▀
+░░░░█▀▄▄▄█░▀▀
+░░░░▌░▄▄▄▐▌▀▀▀
+░▄░▐░░░▄▄░█░▀▀ U HAVE BEEN SPOOKED BY THE
+░▀█▌░░░▄░▀█▀░▀
+░░░░░░░░▄▄▐▌▄▄
+░░░░░░░░▀███▀█░▄
+░░░░░░░▐▌▀▄▀▄▀▐▄SPOOKY SKILENTON
+░░░░░░░▐▀░░░░░░▐▌
+░░░░░░░█░░░░░░░░█
+░░░░░░▐▌░░░░░░░░░█ SEND THIS TO 7 PPL OR SKELINTONS WILL EAT YOU
+
+👒(oo)
+-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>Cursed Words Translator by /u/AjaxGb</title>
+	<base target="_blank">
+	<link rel="stylesheet" type="text/css" href="cursed.css">
+	<script src="scripts/skull.js"></script>
+	<script src="scripts/drawSkulls.js"></script>
+	<script src="scripts/translate.js"></script>
+	<script src="scripts/utility.js"></script>
+	
+	<!-- Major props to http://realfavicongenerator.net/ -->
+	<link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="favicon-194x194.png" sizes="194x194">
+	<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="android-chrome-192x192.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="manifest.json">
+	<link rel="mask-icon" href="safari-pinned-tab.svg" color="#000000">
+	<meta name="msapplication-config" content="browserconfig.xml" />
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="msapplication-TileImage" content="mstile-144x144.png">
+</head>
+
+<body>
+	<div class="page">
+	<div class="content">
+
+		<div class="form">
+			<div class="gridElement justifyHeight">
+				<textarea id="markupInput" rows="7" cols="40" placeholder="Skull markup"></textarea>
+				<button id="markupButton" type="button">
+					To Text
+				</button>
+			</div>
+			<div class="gridElement justifyHeight">
+				<textarea id="plainInput" rows="7" cols="40" placeholder="Plain text"></textarea>
+				<button id="plainButton" type="button">
+					To Skulls
+				</button>
+			</div>
+
+			<div class="gridBreak"></div>
+
+			<div class="gridElement">
+				<canvas id="skullCanvas" width="300" height="200"></canvas>
+			</div>
+
+			<div class="gridElement markupDescription compact">
+				<h1>How to type a skull:</h1>
+				<p>First come the horns:</p>
+				<ul>
+					<li><code>!</code> <em>(exclamation mark)</em> for long horns.</li>
+					<li><code>.</code> <em>(period)</em> for short horns.</li>
+				</ul>
+				<p>Then, inside parentheses, put the eyeholes:</p>
+				<ul>
+					<li><code>.</code> <em>(period)</em> for each dot.</li>
+					<li><code>o</code> <em>(letter o)</em> for empty holes.</li>
+				</ul>
+				<p>Finally, type the number of teeth.</p>
+				<p class="example">
+					Example: <img src="pics/skullExample.png" width="31" height="19"> becomes
+					<code>!.(o.)5 .(oo)7</code>
+				</p>
+			</div>
+			
+			<div class="gridBreak"></div>
+			
+			<div class="gridElement checkboxWrapper">
+				<div class="checkboxHighlight">
+					<input type="checkbox" id="manualCheck"></input>
+					<label for="manualCheck">Manual Translation</label>
+				</div>
+				<p>
+					While this is checked, &ldquo;To Text&rdquo; will convert markup
+					to <code>{chapter,page,word}</code> entries instead of plain text,
+					and open every referenced page in a new tab or window.
+				</p>
+				<p>
+					This will probably set off your pop-up blocker.
+				</p>
+			</div>
+			
+			<div class="gridElement checkboxWrapper">
+				<div class="checkboxHighlight">
+					<input type="checkbox" id="preferCh4Check" checked></input>
+					<label for="preferCh4Check">Prefer Chapters 4 and Earlier</label>
+				</div>
+				<p>
+					While this is checked, &ldquo;To Skulls&rdquo; will avoid using 
+					chapters after chapter four, unless no alternative exists.
+				</p>
+				<p>
+					This helps ensure that skulls have no more than two eyeholes.
+				</p>
+			</div>
+		</div>
+		
+		<hr>
+		
+		<div class="description">
+			<h1>Cursed Words Translator</h1>
+			<p>
+			A project to automate translations to and from the
+			<a href="http://paranatural.wikia.com/wiki/Spirit_Languages#Cursed_Words">Cursed Language</a>
+			found in the webcomic
+			<a href="http://www.paranatural.net/">Paranatural</a>
+			by
+			<a href="https://twitter.com/paranaturalzack">Zack Morrison.</a>
+			</p>
+			<p>
+			Each pair of skulls corresponds to a single word from the archives of Paranatural itself, so
+			translations require looking up arbitrary words from the comic. This website relies on a 
+			hand-maintained &ldquo;database&rdquo; of captions, which may lag behind the comic. At the moment, I've got everything through <strong>CHAPTER 2</strong> in there, with more to follow soon. 
+			</p>
+			<p>
+			Sometimes the exact wordcount of a page can be ambiguous, for example in the case of hyphenated 
+			words, sound effects, tiny unreadable background conversations, wordsbunchedupalltogether, etc. Best judgement will be used in these cases.
+			</p>
+			
+			<div class="expandable minimized">
+				<div class="expandableHeader" tabindex="0">Occurrences in&nbsp;the&nbsp;Comic</div>
+				<div class="expandableContent">
+					<table class="comicCodes">
+						<tr>
+							<th>Page reference</th>
+							<th>Original</th>
+							<th>Corrected</th>
+							<th><!-- Copy Buttons --></th>
+						</tr>
+						<tr>
+							<td>
+								<a href="http://www.paranatural.net/comic/chapter-4-page-75">Chapter&nbsp;4, Page&nbsp;75</a>
+							</td>
+							<!-- Spirit words count apparently -->
+							<td><div class="code">
+								!.(.o)4 .(oo)2&nbsp;&nbsp;.!(.o)7 .(oo)7<br>
+								!.(o.)<del>5</del> .(oo)7&nbsp;&nbsp;!..(..)4 (..)5<br>
+								!(..)3 !...(.o)<del>6</del>&nbsp;&nbsp;.!(..)7 !..(..)5<br>
+								!(o.)3 !...(..)<del>3</del>
+							</div></td>
+							<td><div class="code">
+								!.(.o)4 .(oo)2&nbsp;&nbsp;.!(.o)7 .(oo)7<br>
+								!.(o.)<ins>4</ins> .(oo)7&nbsp;&nbsp;!..(..)4 (..)5<br>
+								!(..)3 !...(.o)<ins>7</ins>&nbsp;&nbsp;.!(..)7 !..(..)5<br>
+								!(o.)3 !...(..)<ins>4</ins>
+							</div></td>
+							<!-- Split up "second-to-last" -->
+							<td>
+								<button class="copyMarkupButton">Copy to Translator</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="http://www.paranatural.net/comic/chapter-4-page-75">Chapter&nbsp;4, Page&nbsp;75</a>
+							</td>
+							<td><div class="code">
+								..(oo)3 .(o.)&nbsp;&nbsp;(..)2 (oo)3<br>
+								(..)1 .!(o.)7&nbsp;&nbsp;..(o.)2 !.....(.o)6<br>
+								!.(.o)4 .(oo)2&nbsp;&nbsp;!..(..)5 (..)3
+							<div></td>
+							<td></td>
+							<td>
+								<button class="copyMarkupButton">Copy to Translator</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="http://www.paranatural.net/comic/chapter-4-page-82">Chapter&nbsp;4, Page&nbsp;82</a>
+							</td>
+							<td><div class="code">
+								!...(..)2 .!(..)3&nbsp;&nbsp;!...(..)2 .!(..)5
+							</div></td>
+							<td></td>
+							<td>
+								<button class="copyMarkupButton">Copy to Translator</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="http://www.paranatural.net/comic/chapter-4-page-86">Chapter&nbsp;4, Page&nbsp;86</a>
+							</td>
+							<td><div class="code">
+								(oo)1 (oo)1
+							</div></td>
+							<td></td>
+							<td>
+								<button class="copyMarkupButton">Copy to Translator</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="http://www.paranatural.net/comic/chapter-4-page-124">Chapter&nbsp;4, Page&nbsp;124</a>
+							</td>
+							<td><div class="code">
+								!.(..)1 (..)8&nbsp;&nbsp;!.(..) .(..)5
+							</div></td>
+							<td></td>
+							<td>
+								<button class="copyMarkupButton">Copy to Translator</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="http://www.paranatural.net/comic/chapter-4-page-148">Chapter&nbsp;4, Page&nbsp;148</a>
+							</td>
+							<td><div class="code">
+								!.(.o)4 .(oo)2&nbsp;&nbsp;.!(.o)7 .(oo)7<br>
+								!.(.o)<del>5</del> .(oo)7&nbsp;&nbsp;...(..)5 ...(.o)4<br>
+								!!....(..)4 ..(..)7&nbsp;&nbsp;!!....(..)5 !...(..)5
+							</div></td>
+							<td><div class="code">
+								!.(.o)4 .(oo)2&nbsp;&nbsp;.!(.o)7 .(oo)7<br>
+								!.(.o)<ins>4</ins> .(oo)7&nbsp;&nbsp;...(..)5 ...(.o)4<br>
+								!!....(..)4 ..(..)7&nbsp;&nbsp;!!....(..)5 !...(..)5
+							</div></td>
+							<td>
+								<button class="copyMarkupButton">Copy to Translator</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="http://www.paranatural.net/comic/chapter-4-page-148">Chapter&nbsp;4, Page&nbsp;148</a>
+							</td>
+							<td><div class="code">
+								!(..) !(o.)1&nbsp;&nbsp;!(..)2 ..(..)3<br>
+								!!.(..)8 .(..)2&nbsp;&nbsp;!..(o.)2 ...(o...)8
+							</div></td>
+							<!-- Ignore background text -->
+							<td></td>
+							<td>
+								<button class="copyMarkupButton">Copy to Translator</button>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="http://www.paranatural.net/comic/chapter-5-page-89">Chapter&nbsp;5, Page&nbsp;89</a>
+							</td>
+							<td><div class="code">
+								(oo)3 (oo)3
+							</div></td>
+							<td></td>
+							<td>
+								<button class="copyMarkupButton">Copy to Translator</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			
+			<div class="tips compact">
+				<h1>Tips:</h1>
+				<p>
+					You can force the translator to use a specific instance of a word
+					by typing
+					<br><code>{c,p,w}</code> into the plain text box, where
+					<ul>
+						<li><code>c</code> is the chapter number</li>
+						<li><code>p</code> is the page number</li>
+						<li><code>w</code> is the word number</li>
+					</ul>
+				</p>
+				<br>
+				<h1>If a word doesn't become skulls:</h1>
+				<p>Try removing unnecessary punctuation.</p>
+				<span class="good">GOOD:</span>
+				<ul>
+					<li><code>'</code> Apostrophes, as in <code>can't</code>, <code>'kay</code>, <code>fightin'</code>.</li>
+					<li><code>-</code> Some hyphens, as in <code>w-what</code>, <code>walkie-talkie</code>, <code>agai-</code>. You can try it both ways.</li>
+					<li><code>.</code> Periods when used in abbreviation, as in <code>Mr.</code></li>
+					<li><code>:/</code> Necessary special characters, as in <code>8:15</code>, <code>7/11</code>.</li>
+				</ul>
+				<span class="bad">BAD:</span>
+				<ul>
+					<li><code>.,:;!?"()</code> Most punctuation. If you're not certain you need it, take it out.</li>
+				</ul>
+			</div>
+			
+			<div class="attribution">
+				<address>
+					Translator coded by Sol Toder
+					(<a href="https://www.reddit.com/user/ajaxgb">/u/AjaxGb</a>)
+					(<a href="mailto:toders@rpi.edu">toders@rpi.edu</a>)
+				</address>
+				<p>
+					Database complete up to Chapter 2, Page 30 (more soon)
+				</p>
+				<p>
+					Last updated
+					<time datetime="2016-04-09">April 9, 2016</time>
+				</p>
+				<p class="tiny">thank mr skeltal</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>
