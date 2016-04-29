@@ -1,9 +1,11 @@
-import sys, os, re
+import os, re
 from string import Template
 from collections import defaultdict
 
+alphaRE = re.compile("[a-z]")
 def encodeWord(word):
-	if word[0].isalpha():
+	word = word.lower()
+	if re.match(alphaRE, word[0]):
 		folder = word[0]
 	else:
 		folder = "0"
