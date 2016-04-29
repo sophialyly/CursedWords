@@ -26,13 +26,21 @@ function toggleExpand(){
 	}
 }
 
+var selectedRow;
 function copyMarkup(){
-	var tds = this.parentElement.parentElement.children;
-	var innerText = tds[tds[2].textContent.length > 0 ? 2 : 1]
+	if(selectedRow){
+		selectedRow.classList.remove("selectedRow");
+	}
+	selectedRow = this.parentElement.parentElement;
+	selectedRow.classList.add("selectedRow");
+	var tds = selectedRow.children;
+	var noCorrections = tds[2].firstChild.classList.contains("emptyCode");
+	var innerText = tds[noCorrections ? 1 : 2]
 		.textContent.replace(textContentRegEx,"");
-	console.log(innerText);
 	markupInput.value = innerText;
 	updateSkullDisplay();
-	history.pushState({}, "", this.href);
+	if(history.pushState){
+		history.pushState({}, "");
+	}
 	window.scrollTo(0,0);
 }

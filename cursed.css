@@ -315,7 +315,27 @@ strong {
 .comicCodes {
 	table-layout: fixed;
 	padding: 10px 0px;
+	border-collapse: collapse;
 	width: 100%;
+}
+
+.comicCodes td {
+	padding: 2px 1px;
+	height: 100%;
+}
+
+.comicCodes .selectedRow {
+	background-color: #EEEEFF;
+}
+
+.comicCodes .selectedRow .code {
+	background-color: #CCCCFF;
+	border-color: #AAAAFF;
+}
+
+.comicCodes .selectedRow .emptyCode {
+	background-color: #DDDDFF;
+	border-color: #CCCCFF;
 }
 
 .comicCodes th,
@@ -347,7 +367,8 @@ strong {
 	overflow: auto;
 }
 
-.comicCodes td:nth-child(3):empty {
+.comicCodes .emptyCode {
+	height: 80px;
 	background-color: #FAFAFA;
 	border: 1px solid #EEE;
 }
