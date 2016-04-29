@@ -230,14 +230,14 @@ function requestSkulls(word,outputArr,index){
 				}
 			};
 		})(xhttp,outputArr,word));
-		var couldNotLoad = (function(x,oA){
+		var couldNotLoad = (function(x,oA,w){
 			return function(){
 				delete db.index[w];
 				for(var i=0;i<x.indices.length;++i){
 					if(setSkullPair(oA, x.indices[i])) break;
 				}
 			};
-		})(xhttp,outputArr);
+		})(xhttp,outputArr,word);
 		xhttp.addEventListener("abort",couldNotLoad);
 		xhttp.addEventListener("error",couldNotLoad);
 		xhttp.addEventListener("timeout",couldNotLoad);	

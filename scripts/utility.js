@@ -1,15 +1,23 @@
 var textContentRegEx = /\t|^[\r\n|\n|\r]|[\r\n|\n|\r]$/g;
 
 window.addEventListener("load",function(){
-	var exps = document.getElementsByClassName("expandable");
+	var exps = document.getElementsByClassName("expandableHeader");
 	for(var i=0;i<exps.length;++i){
-		exps[i].firstElementChild.addEventListener("click",toggleExpand);
+		exps[i].addEventListener("click",toggleExpand);
+		exps[i].addEventListener("keydown",clickSelfOnEnter);
 	}
 	var butts = document.getElementsByClassName("copyMarkupButton");
 	for(var lol=0;lol<butts.length;++lol){
 		butts[lol].addEventListener("click",copyMarkup);
 	}
 });
+
+function clickSelfOnEnter(e){
+	if (e.key === "Enter" || e.keyCode === 13 ||
+		e.keyIdentifier === "Enter" || e.which === 13) {
+		this.click();
+	}
+}
 
 function toggleExpand(){
 	var tabIndex, expandable = this.parentElement;
