@@ -13,8 +13,7 @@ window.addEventListener("load",function(){
 });
 
 function clickSelfOnEnter(e){
-	if (e.key === "Enter" || e.keyCode === 13 ||
-		e.keyIdentifier === "Enter" || e.which === 13) {
+	if (e.key === "Enter" || e.keyCode === 13) {
 		this.click();
 	}
 }

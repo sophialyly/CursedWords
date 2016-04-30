@@ -1,4 +1,4 @@
-var db = {index:{}}, markupInput, plainInput, canvas,
+var db = {index:{}}, markupInput, plainInput,
 	manualInput, preferChaptersBelow4Input, wordRE = /\S+/g;
 
 window.addEventListener("load",function(){
@@ -7,78 +7,92 @@ window.addEventListener("load",function(){
 	manualInput = document.getElementById("manualCheck");
 	preferChaptersBelow4Input = document.getElementById("preferCh4Check");
 	
-	document.getElementById("markupButton").addEventListener("click",function(){
-		var skulls = getSkullArray(markupInput.value);
-		markupInput.value = plainInput.value = "";
-		if(manualInput.checked){
-			var pagesToOpen = {};
-		}else{
-			var outputArr = new Array(Math.floor(skulls.length/2));
-			outputArr.filled = 0;
-		}
-		for(var i=1;i<skulls.length;i+=2){ // By twos
-			var skull1 = skulls[i-1], skull2 = skulls[i];
-			if(skull1.piece == 1 || skull2.piece == 1){
-				if(manualInput.checked){
-					plainInput.value += "{monkey} ";
-				}else{
-					setPlainWord(outputArr,(i-1)/2,"MONKEY");
-				}
-			}else{
-				var chapter = parseInt(skull1.eyes + skull2.eyes,10);
-				var page = parseInt(skull1.horns + "" + skull1.teeth,10);
-				var word = parseInt(skull2.horns + "" + skull2.teeth,10);
-				if(manualInput.checked){
-					plainInput.value += "{chap:"+chapter+",page:"+page+",word:"+word+"} ";
-					var address = "http://www.paranatural.net/comic/chapter-" + chapter
-						+ "-page-" + page;
-					pagesToOpen[address] = true;
-				}else{
-					var errStr = "{chap:"+chapter+",page:"+page+",word:"+word+"}";
-					outputArr[(i-1)/2] = errStr;
-					requestWord(chapter,page,word,outputArr,(i-1)/2);
-				}
-			}
-			markupInput.value += skull1.markup+" "+skull2.markup;
-			if(i<skulls.length-2){
-				if(i%4==1) markupInput.value += "  ";
-				else markupInput.value += "\n";
-			}
-		}
-		if(skulls.length%2!=0){
-			markupInput.value += "\n\n"+skulls[skulls.length-1].markup;
-		}
-		if(manualInput.checked){
-			for(var add in pagesToOpen){
-				window.open(add).blur();
-			}
-			window.focus();
-		}else{
-			plainInput.value = outputArr.join(" ");
+	document.getElementById("markupButton").addEventListener("click",markupToPlain);
+	markupInput.addEventListener("keydown",function(e){
+		if((e.key === "Enter" || e.keyCode === 13) && e.ctrlKey){
+			markupToPlain();
 		}
 	});
 
-	document.getElementById("plainButton").addEventListener("click",function(){
-		var input = plainInput.value.toLowerCase().trim().match(wordRE);
-		if(!input) return;
-		input.filled = 0;
-		for(var i=0;i<input.length;++i){
-			if(input[i].charAt(0)=="{" && input[i].charAt(input[i].length-1)=="}"){
-				var explicit = input[i].slice(1,-1).split(",");
-				if(explicit.length == 3){
-					setSkullPair(input,i,skullPairFromCPW(
-						explicit[0].slice(explicit[0].lastIndexOf(':')+1),
-						explicit[1].slice(explicit[1].lastIndexOf(':')+1),
-						explicit[2].slice(explicit[2].lastIndexOf(':')+1)));
-					continue;
-				}
-			}
-			requestSkulls(input[i],input,i);
+	document.getElementById("plainButton").addEventListener("click",plainToMarkup);
+	plainInput.addEventListener("keydown",function(e){
+		if((e.key === "Enter" || e.keyCode === 13) && e.ctrlKey){
+			plainToMarkup();
 		}
-		markupInput.value = skullPairsToString(input);
-		updateSkullDisplay();
 	});
 });
+
+function markupToPlain(){
+	var skulls = getSkullArray(markupInput.value);
+	markupInput.value = plainInput.value = "";
+	if(manualInput.checked){
+		var pagesToOpen = {};
+	}else{
+		var outputArr = new Array(Math.floor(skulls.length/2));
+		outputArr.filled = 0;
+	}
+	for(var i=1;i<skulls.length;i+=2){ // By twos
+		var skull1 = skulls[i-1], skull2 = skulls[i];
+		if(skull1.piece == 1 || skull2.piece == 1){
+			if(manualInput.checked){
+				plainInput.value += "{monkey} ";
+			}else{
+				setPlainWord(outputArr,(i-1)/2,"MONKEY");
+			}
+		}else{
+			var chapter = parseInt(skull1.eyes + skull2.eyes,10);
+			var page = parseInt(skull1.horns + "" + skull1.teeth,10);
+			var word = parseInt(skull2.horns + "" + skull2.teeth,10);
+			if(manualInput.checked){
+				plainInput.value += "{chap:"+chapter+",page:"+page+",word:"+word+"} ";
+				var address = "http://www.paranatural.net/comic/chapter-" + chapter
+				+ "-page-" + page;
+				pagesToOpen[address] = true;
+			}else{
+				var errStr = "{chap:"+chapter+",page:"+page+",word:"+word+"}";
+				outputArr[(i-1)/2] = errStr;
+				requestWord(chapter,page,word,outputArr,(i-1)/2);
+			}
+		}
+		markupInput.value += skull1.markup+" "+skull2.markup;
+		if(i<skulls.length-2){
+			if(i%4==1) markupInput.value += "  ";
+			else markupInput.value += "\n";
+		}
+	}
+	if(skulls.length%2!=0){
+		markupInput.value += "\n\n"+skulls[skulls.length-1].markup;
+	}
+	if(manualInput.checked){
+		for(var add in pagesToOpen){
+			window.open(add).blur();
+		}
+		window.focus();
+	}else{
+		plainInput.value = outputArr.join(" ");
+	}
+}
+
+function plainToMarkup(){
+	var input = plainInput.value.toLowerCase().trim().match(wordRE);
+	if(!input) return;
+	input.filled = 0;
+	for(var i=0;i<input.length;++i){
+		if(input[i].charAt(0)=="{" && input[i].charAt(input[i].length-1)=="}"){
+			var explicit = input[i].slice(1,-1).split(",");
+			if(explicit.length == 3){
+				setSkullPair(input,i,skullPairFromCPW(
+				explicit[0].slice(explicit[0].lastIndexOf(':')+1),
+				explicit[1].slice(explicit[1].lastIndexOf(':')+1),
+				explicit[2].slice(explicit[2].lastIndexOf(':')+1)));
+				continue;
+			}
+		}
+		requestSkulls(input[i],input,i);
+	}
+	markupInput.value = skullPairsToString(input);
+	updateSkullDisplay();
+}
 
 function getSkullArray(text){
 	var skullRE = /([.!]*|👒)\(([oO0.]*)\)(\d?)/g;

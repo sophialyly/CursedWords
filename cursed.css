@@ -98,20 +98,6 @@ code {
 	font-family: monospace;
 }
 
-.compact {
-	font-size: smaller;
-}
-
-.compact p , .compact li, .compact ul {
-	margin: 2px!important;
-	width: auto!important;
-}
-
-.compact h1 {
-	font-size: larger;
-	margin: 3px 0px;
-}
-
 .markupDescription {
 	margin-top: 20px;
 	display: inline-block;
@@ -198,6 +184,20 @@ hr {
 	text-align: justify;
 }
 
+.compact {
+	font-size: smaller;
+}
+
+.compact p, .compact div, .compact li, .compact ul {
+	margin: 2px;
+	width: auto;
+}
+
+.compact h1 {
+	font-size: larger;
+	margin: 3px 0px;
+}
+
 strong {
 	font-weight: bolder;
 }
@@ -222,8 +222,13 @@ strong {
 	border: 2px dashed #555;
 }
 
+.tips .tip {
+	margin-bottom: 15px;
+}
+
 .tips h1 {
 	margin: initial;
+	margin-bottom: 10px;
 	font-size: large;
 	text-align: left;
 }
