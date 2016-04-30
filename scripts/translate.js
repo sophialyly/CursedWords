@@ -11,6 +11,7 @@ window.addEventListener("load",function(){
 	markupInput.addEventListener("keydown",function(e){
 		if((e.key === "Enter" || e.keyCode === 13) && e.ctrlKey){
 			markupToPlain();
+			e.preventDefault();
 		}
 	});
 
@@ -18,6 +19,7 @@ window.addEventListener("load",function(){
 	plainInput.addEventListener("keydown",function(e){
 		if((e.key === "Enter" || e.keyCode === 13) && e.ctrlKey){
 			plainToMarkup();
+			e.preventDefault();
 		}
 	});
 });
