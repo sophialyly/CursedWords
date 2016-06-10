@@ -24,7 +24,7 @@ fileTemp = Template("ch$c/p$p.txt")
 index = defaultdict(lambda : defaultdict(list))
 while True:
 	while os.path.isfile(fileTemp.substitute(c=chapI, p=pageI)):
-		with open(fileTemp.substitute(c=chapI, p=pageI)) as file:
+		with open(fileTemp.substitute(c=chapI, p=pageI),encoding="utf-8") as file:
 			wordI = 1
 			for line in file:
 				for word in line.split():
@@ -69,7 +69,7 @@ for folder in index:
 		fileContent = [",".join(str(x) for x in pos) for pos in positions]
 		fileName = word + ".txt"
 		if folder in existingIndexFiles and fileName in existingIndexFiles[folder]:
-			existingFile = open(folder + "/" + fileName)
+			existingFile = open(folder + "/" + fileName,encoding="utf-8")
 			i = 0
 			for line in existingFile:
 				if i >= len(fileContent) or line.strip() != fileContent[i]:
@@ -84,7 +84,7 @@ for folder in index:
 		else:
 			created += 1
 		os.makedirs(folder, exist_ok=True)
-		with open(folder + "/" + fileName, mode="w") as indexFile:
+		with open(folder + "/" + fileName,mode="w",encoding="utf-8") as indexFile:
 			for line in fileContent:
 				print(line, file=indexFile)
 
