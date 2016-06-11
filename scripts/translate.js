@@ -35,7 +35,13 @@ function markupToPlain(){
 	}
 	for(var i=1;i<skulls.length;i+=2){ // By twos
 		var skull1 = skulls[i-1], skull2 = skulls[i];
-		if(skull1.piece == 1 || skull2.piece == 1){
+		if(skull1.missing || skull2.missing){
+			if(manualInput.checked){
+				plainInput.value += "{NOTFOUND} ";
+			}else{
+				setPlainWord(outputArr,(i-1)/2,"{NOTFOUND}");
+			}
+		}else if(skull1.piece == 1 || skull2.piece == 1){
 			if(manualInput.checked){
 				plainInput.value += "{monkey} ";
 			}else{
@@ -88,6 +94,9 @@ function plainToMarkup(){
 				explicit[1].slice(explicit[1].lastIndexOf(':')+1),
 				explicit[2].slice(explicit[2].lastIndexOf(':')+1)));
 				continue;
+			}else if(explicit[0].toUpperCase() === "NOTFOUND"){
+				setSkullPair(input,i);
+				continue;
 			}
 		}
 		requestSkulls(input[i],input,i);
@@ -97,7 +106,7 @@ function plainToMarkup(){
 }
 
 function getSkullArray(text){
-	var skullRE = /([.!]*|👒)\(([oO0.]*)\)(\d?)/g;
+	var skullRE = /([.!]*|👒)\(([oO0.]*|[xX])\)(\d?)/g;
 	var skulls = [];
 	var dat;
 	while ((dat = skullRE.exec(text)) !== null) {
@@ -144,7 +153,7 @@ function skullPairsToString(arr){
 	var result = "";
 	for(var i=0;i<arr.length;++i){
 		if(arr[i] instanceof Array) result += arr[i][0].markup+" "+arr[i][1].markup;
-		else result += "() ()";
+		else result += "(X) (X)";
 		if(i<arr.length-1){
 			if(i%2==0) result += "  ";
 			else result += "\n";

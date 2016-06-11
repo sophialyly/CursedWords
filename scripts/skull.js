@@ -10,6 +10,10 @@ function Skull(horns,eyes,teeth,markup){
 	}
 	if(typeof eyes == "number"){
 		this.eyes = eyes;
+	}else if (eyes === "X" || eyes === "x"){
+		this.missing = true;
+		this.markup = markup;
+		return;
 	}else{
 		this.eyes = 0;
 		for(var i=0;i<eyes.length;++i){

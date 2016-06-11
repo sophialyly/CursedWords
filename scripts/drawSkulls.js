@@ -1,4 +1,4 @@
-var markupInput, canvas, context, strawHat = new Image(41,37),
+var markupInput, canvas, context, strawHat = new Image(41,37), missing = new Image(26,18),
 	skullW = 25, skullH = 12, bezNudge = 2, skullMid = skullW/2,
 	eyeR = 3.6, dotR = 1.6,
 	jawI = 5, jawSmI = 6, jawDmin = 16, jawDmax = 18, jawUmin = 6.5, jawUmax = 8.5,
@@ -8,6 +8,7 @@ var markupInput, canvas, context, strawHat = new Image(41,37),
 	spaceXS = 30, spaceXL = 40, spaceY = 50, marginX = 16, marginY = 25,
 	parenRegEx = /[\(\)]/;
 strawHat.src = "pics/strawHatSkull.png";
+missing.src = "pics/missingSkull.png";
 
 window.addEventListener("load",function(){
 	markupInput = document.getElementById("markupInput");
@@ -48,6 +49,10 @@ function drawSkullArray(ctx, canvas, skulls){
 function drawSkull(ctx, x, y, skull){
 	if(skull.piece == 1){
 		ctx.drawImage(strawHat,x-8,y-17);
+		return;
+	}
+	if(skull.missing){
+		ctx.drawImage(missing,x-1,y-9);
 		return;
 	}
 	var marks = skull.markup.split(parenRegEx);
