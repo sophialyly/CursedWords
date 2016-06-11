@@ -1,5 +1,6 @@
 var db = {index:{}}, markupInput, plainInput,
-	manualInput, preferChaptersBelow4Input, wordRE = /\S+/g;
+	manualInput, preferChaptersBelow4Input, wordRE = /\S+/g,
+	missingSkullPair = [{markup:"(X)"},{markup:"(X)"}];
 
 window.addEventListener("load",function(){
 	markupInput = document.getElementById("markupInput");
@@ -127,11 +128,9 @@ function setPlainWord(outputArr,index,value){
 }
 
 function setSkullPair(outputArr,index,skullpair){
-	if(skullpair!==undefined){
-		outputArr[index] = skullpair;
-		markupInput.value = skullPairsToString(outputArr);
-		updateSkullDisplay();
-	}
+	outputArr[index] = skullpair || missingSkullPair;
+	markupInput.value = skullPairsToString(outputArr);
+	updateSkullDisplay();
 	if(++(outputArr.filled)>=outputArr.length){
 		return true;
 	}
@@ -153,7 +152,7 @@ function skullPairsToString(arr){
 	var result = "";
 	for(var i=0;i<arr.length;++i){
 		if(arr[i] instanceof Array) result += arr[i][0].markup+" "+arr[i][1].markup;
-		else result += "(X) (X)";
+		else result += "() ()";
 		if(i<arr.length-1){
 			if(i%2==0) result += "  ";
 			else result += "\n";
