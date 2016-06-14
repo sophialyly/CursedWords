@@ -107,7 +107,7 @@ function plainToMarkup(){
 }
 
 function getSkullArray(text){
-	var skullRE = /([.!]*|👒)\(([oO0.]*|[xX])\)(\d?)/g;
+	var skullRE = /([.!]*|\uD83D\uDC52)\(([oO0.]*|[xX])\)(\d?)/g;
 	var skulls = [];
 	var dat;
 	while ((dat = skullRE.exec(text)) !== null) {

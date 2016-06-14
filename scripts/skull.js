@@ -1,7 +1,7 @@
 function Skull(horns,eyes,teeth,markup){
 	if(typeof horns == "number"){
 		this.horns = horns;
-	}else if(horns == "👒"){
+	}else if(horns == "\uD83D\uDC52"){
 		this.piece = 1;
 		this.markup = markup;
 		return;
