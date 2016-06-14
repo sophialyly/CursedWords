@@ -1,4 +1,5 @@
-var db = {index:{}}, markupInput, plainInput,
+var dbAddress = "http://ajaxgb.github.io/CursedWords/db/",
+	db = {index:{}}, markupInput, plainInput,
 	manualInput, preferChaptersBelow4Input, wordRE = /\S+/g,
 	missingSkullPair = [{markup:"(X)"},{markup:"(X)"}];
 
@@ -174,7 +175,7 @@ function requestWord(chapter,page,word,outputArr,index){
 		console.log(chapter,page,word,"known dead");
 		setPlainWord(outputArr, index);
 	}else if(db[chapter][page]===undefined || db[chapter][page][word-1]===undefined){
-		var req = "db/ch"+chapter+"/p"+page+".txt";
+		var req = dbAddress+"ch"+chapter+"/p"+page+".txt";
 		console.log("retrieving",req);
 		var xhttp = new XMLHttpRequest();
 		xhttp.indices = [{i:index,w:word}];
@@ -228,7 +229,7 @@ function requestSkulls(word,outputArr,index){
 		if(nonAlphaRE.test(folder)){
 			folder = "0";
 		}
-		var req = "db/index/"+folder+"/"+encodeWord(word)+".txt";
+		var req = dbAddress+"index/"+folder+"/"+encodeWord(word)+".txt";
 		console.log("retrieving",req);
 		var xhttp = new XMLHttpRequest();
 		xhttp.indices = [index];
