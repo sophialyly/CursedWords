@@ -1,4 +1,4 @@
-var dbAddress = "http://ajaxgb.github.io/CursedWords/db/",
+var dbAddress = "https://ajaxgb.github.io/CursedWords/db/",
 	db = {index:{}}, markupInput, plainInput,
 	manualInput, preferChaptersBelow4Input, wordRE = /\S+/g,
 	missingSkullPair = [{markup:"(X)"},{markup:"(X)"}];
