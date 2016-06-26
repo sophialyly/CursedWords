@@ -1,14 +1,13 @@
-var markupInput, canvas, context, strawHat = new Image(41,37), missing = new Image(26,18),
-	skullW = 25, skullH = 12, bezNudge = 2, skullMid = skullW/2,
-	eyeR = 3.6, dotR = 1.6,
-	jawI = 5, jawSmI = 6, jawDmin = 16, jawDmax = 18, jawUmin = 6.5, jawUmax = 8.5,
-	teethGap = 5, teethHS = 3, teethHL = 5, teethLineWeight = 2.5,
-	scalpI = 1, scalpMin = 5.5, scalpMax = 10,
-	hornHS = 4, hornHL = 9, hornCL = 2, hornCS = 0.75, hornLineWeight = 2.2,
-	spaceXS = 30, spaceXL = 40, spaceY = 50, marginX = 16, marginY = 25,
+var markupInput, canvas, context, strawHat = new Image(84,77),
+	skullW = 50, skullH = 24, bezNudge = 2, eyeR = 7.2, dotR = 3.2,
+	jawI = 10, jawSmI = 12, jawDmin = 32, jawDmax = 36, jawUmin = 13, jawUmax = 17,
+	teethGap = 10, teethHS = 6, teethHL = 10, teethLineWeight = 5,
+	scalpI = 2, scalpMin = 8, scalpMax = 20,
+	hornHS = 8, hornHL = 18, hornCL = 4, hornCS = 1.5, hornLineWeight = 4.4,
+	spaceXS = 60, spaceXL = 80, spaceY = 100, marginX = 32, marginY = 50,
+	xL = 2, xR = skullW-xL, xH = 17.5, xLineWeight = 6.5,
 	parenRegEx = /[\(\)]/;
 strawHat.src = "pics/strawHatSkull.png";
-missing.src = "pics/missingSkull.png";
 
 window.addEventListener("load",function(){
 	markupInput = document.getElementById("markupInput");
@@ -48,11 +47,7 @@ function drawSkullArray(ctx, canvas, skulls){
 
 function drawSkull(ctx, x, y, skull){
 	if(skull.piece == 1){
-		ctx.drawImage(strawHat,x-8,y-17);
-		return;
-	}
-	if(skull.missing){
-		ctx.drawImage(missing,x-1,y-9);
+		ctx.drawImage(strawHat,x-17,y-35,84,77);
 		return;
 	}
 	var marks = skull.markup.split(parenRegEx);
@@ -61,9 +56,23 @@ function drawSkull(ctx, x, y, skull){
 	ctx.moveTo(x,y);
 	ctx.bezierCurveTo(x-bezNudge,y+skullH,x+skullW+bezNudge,y+skullH,x+skullW,y);
 	ctx.bezierCurveTo(x+skullW+bezNudge,y-skullH,x-bezNudge,y-skullH,x,y);
+	// Draw X if skull is missing
+	if(skull.missing){
+		ctx.fill();
+		ctx.strokeStyle = "#F00";
+		ctx.lineWidth = xLineWeight;
+		ctx.beginPath();
+		ctx.moveTo(x+xL,y+xH);
+		ctx.lineTo(x+xR,y-xH);
+		ctx.moveTo(x+xL,y-xH);
+		ctx.lineTo(x+xR,y+xH);
+		ctx.stroke();
+		ctx.strokeStyle = "#FFF";
+		return;
+	}
 	// Draw eyes
-	var eyeSpread = (skullW+bezNudge+bezNudge) / (marks[1].length+1);
-	var eyeX = x + eyeSpread - bezNudge;
+	var eyeSpread = (skullW+4*bezNudge) / (marks[1].length+1);
+	var eyeX = x + eyeSpread - 2*bezNudge;
 	for(var i=0;i<marks[1].length;++i){
 		circle(ctx,eyeX,y,eyeR);
 		if(marks[1].charAt(i)==".") circle(ctx,eyeX,y,dotR);
@@ -136,16 +145,16 @@ function circle(ctx, x, y, r){
 }
 
 var spikePosCache = [
-	[],										//0
-	[0.5],									//1
-	[0.37,0.63],							//2
-	[0.2,0.5,0.8],							//3
-	[0,0.37,0.63,1],						//4
-	[0,0.32,0.5,0.68,1],					//5
-	[0,0.28,0.43,0.57,0.72,1],				//6
-	[0,0.25,0.38,0.5,0.62,0.75,1],			//7
-	[0,0.23,0.35,0.45,0.55,0.65,0.77,1],	//8
-	[0,0.21,0.33,0.43,0.5,0.57,0.67,0.79,1]	//9
+	[],                                     //0
+	[0.5],                                  //1
+	[0.37,0.63],                            //2
+	[0.15,0.5,0.85],                        //3
+	[0,0.37,0.63,1],                        //4
+	[0,0.32,0.5,0.68,1],                    //5
+	[0,0.28,0.43,0.57,0.72,1],              //6
+	[0,0.25,0.38,0.5,0.62,0.75,1],          //7
+	[0,0.23,0.35,0.45,0.55,0.65,0.77,1],    //8
+	[0,0.21,0.33,0.43,0.5,0.57,0.67,0.79,1] //9
 ];
 function drawSpikes(ctx,p0x,p0y,c0x,c0y,c1x,c1y,p1x,p1y,lengths,curves){
 	var ptOn, t, curveMul;
@@ -159,7 +168,7 @@ function drawSpikes(ctx,p0x,p0y,c0x,c0y,c1x,c1y,p1x,p1y,lengths,curves){
 	}
 	for(var i = 0; i < t.length; ++i){
 		ptOn = pointOnBezier(p0x,p0y,c0x,c0y,c1x,c1y,p1x,p1y,t[i]);
-		ctx.moveTo(ptOn.x,ptOn.y);
+		ctx.moveTo(ptOn.x,ptOn.y-1);
 		if(curves){
 			//if(t[i]>0.9) curveMul = 0.7;
 			if(t[i]>0.5) curveMul = 1;
