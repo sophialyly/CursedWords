@@ -72,6 +72,7 @@ textarea {
     box-sizing: border-box;
     text-indent: 0px;
 	overflow: hidden;
+	cursor: default;
 	z-index: 1;
 }
 
