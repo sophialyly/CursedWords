@@ -1,0 +1,4 @@
+hair
+haircut
+haircuts
+hairstyle

@@ -1,0 +1,4 @@
+open
+opposite
+opener
+opportunity

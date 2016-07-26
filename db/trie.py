@@ -18,6 +18,7 @@ class Trie:
 	def __init__(self, copy=[], **kwargs):
 		self._root = _TrieNode()
 		self._length = 0
+		self._nodes = 0
 		try:
 			for key, value in copy.items():
 				self[key] = value
@@ -29,6 +30,9 @@ class Trie:
 	
 	def __len__(self):
 		return self._length
+	
+	def num_nodes(self):
+		return self._nodes
 	
 	def __contains__(self, key):
 		node = _find_node(self._root, key)
@@ -46,6 +50,7 @@ class Trie:
 		for char in key:
 			if char not in node.next:
 				node.next[char] = _TrieNode()
+				self._nodes += 1
 			node = node.next[char]
 		if not node.hasvalue():
 			self._length += 1
@@ -59,6 +64,8 @@ class Trie:
 				if lastbranch == None or len(node.next) > 1:
 					lastdict = node.next
 					lastbranch = char
+					branchlength = 0
+				branchlength += 1
 				node = node.next[char]
 			else:
 				raise KeyError
@@ -66,6 +73,7 @@ class Trie:
 			raise KeyError
 		if lastbranch != None and len(node.next) == 0: # No children
 			del lastdict[lastbranch]
+			self._nodes -= branchlength
 		else:
 			del node.value
 		self._length -= 1
@@ -76,6 +84,7 @@ class Trie:
 	def clear(self):
 		self._root = _TrieNode()
 		self._length = 0
+		self._nodes = 0
 	
 	def get(self, key, default=None):
 		try:
@@ -88,6 +97,7 @@ class Trie:
 		for char in key:
 			if char not in node.next:
 				node.next[char] = _TrieNode()
+				self._nodes += 1
 			node = node.next[char]
 		if node.hasvalue():
 			return node.value
@@ -97,32 +107,32 @@ class Trie:
 			return default
 	
 	def keys(self):
-		return (node.key for node in _node_iter(self._root))
+		return (node.key for node in _iter_nonempty(self._root))
 	
 	def values(self):
-		return (node.value for node in _node_iter(self._root))
+		return (node.value for node in _iter_nonempty(self._root))
 	
 	def items(self):
-		return ((node.key, node.value) for node in _node_iter(self._root))
+		return ((node.key, node.value) for node in _iter_nonempty(self._root))
 	
 	def prefix_keys(self, prefix):
 		node = _find_node(self._root, prefix)
 		if node != None:
-			return (n.key for n in _node_iter(node))
+			return (n.key for n in _iter_nonempty(node))
 		else:
 			return iter(())
 	
 	def prefix_values(self, prefix):
 		node = _find_node(self._root, prefix)
 		if node != None:
-			return (n.value for n in _node_iter(node))
+			return (n.value for n in _iter_nonempty(node))
 		else:
 			return iter(())
 	
 	def prefix_items(self, prefix):
 		node = _find_node(self._root, prefix)
 		if node != None:
-			return ((n.key, n.value) for n in _node_iter(node))
+			return ((n.key, n.value) for n in _iter_nonempty(node))
 		else:
 			return iter(())
 	
@@ -143,10 +153,11 @@ def _recurse_suggest(node, maxlength):
 	s = []
 	for n in node.next.values():
 		s.extend(_recurse_suggest(n, maxlength))
-	s.sort(key=lambda x: x[1], reverse=True)
+	# Sort first by number of entries, then alphabetically
+	s.sort(key=lambda x: (-x[1], x[0]))
 	s = s[:maxlength]
 	if node.hasvalue():
-		s.insert(0, (node.value, len(node.value)))
+		s.insert(0, (node.key, len(node.value)))
 	node.suggest = s[:maxlength]
 	return s
 
@@ -158,8 +169,8 @@ def _find_node(node, prefix):
 			return None
 	return node
 
-def _node_iter(node):
+def _iter_nonempty(node):
 	if node.hasvalue():
 		yield node
 	for n in node.next.values():
-		yield from _node_iter(n)
+		yield from _iter_nonempty(n)

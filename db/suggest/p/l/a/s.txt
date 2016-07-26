@@ -1,0 +1,6 @@
+place
+play
+playing
+plane
+planning
+played

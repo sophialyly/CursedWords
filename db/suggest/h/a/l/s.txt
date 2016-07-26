@@ -1,0 +1,4 @@
+half
+hallway
+hallway's
+halt
