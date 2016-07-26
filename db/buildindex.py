@@ -1,75 +1,79 @@
-import os, re
+import os
 from string import Template
-from collections import defaultdict
+from trie import Trie, _node_iter
 
-alphaRE = re.compile("[a-z]")
 def encodeWord(word):
 	word = word.lower()
-	if re.match(alphaRE, word[0]):
-		folder = word[0]
-	else:
-		folder = "0"
-	encoded = ""
+	encoded = ''
 	for char in word:
 		if char.isalnum():
 			encoded += char
 		else:
-			encoded += "-" + repr(ord(char)) + "-"
-	return folder, encoded
+			encoded += '-' + repr(ord(char)) + '-'
+	return encoded
 
-### BEGIN MAIN FUNCTION ###
+### READ ALL CHAPTERS ###
 
 chapI, pageI = 1, 1
-fileTemp = Template("ch$c/p$p.txt")
-index = defaultdict(lambda : defaultdict(list))
+fileTemp = Template('ch$c/p$p.txt')
+index = Trie()
 while True:
 	while os.path.isfile(fileTemp.substitute(c=chapI, p=pageI)):
-		with open(fileTemp.substitute(c=chapI, p=pageI),encoding="utf-8") as file:
+		with open(fileTemp.substitute(c=chapI, p=pageI),encoding='utf-8') as file:
 			wordI = 1
 			for line in file:
 				for word in line.split():
-					folder, encoded = encodeWord(word)
-					index[folder][encoded].append((chapI, pageI, wordI))
+					encoded = encodeWord(word)
+					index[encoded].setdefault([]).append((chapI, pageI, wordI))
 					wordI += 1
 		pageI += 1
 	if pageI == 1:
 		break
-	print("Found chapter", chapI, "containing", pageI-1, "pages")
+	print('Found chapter', chapI, 'containing', pageI-1, 'pages')
 	chapI += 1
 	pageI = 1
+index.gensuggestions(10)
 
-print("\nTotal words found:", sum(len(folder) for folder in index.values()))
+print('\nTotal words found:', len(index))
 
-os.makedirs("index", exist_ok=True)
-os.chdir("index")
+### SCAN EXISTING INDEX, DELETE AS APPROPRIATE ###
+
+os.makedirs('index', exist_ok=True)
+os.chdir('index')
 existingIndexFiles = {}
-for folder in os.listdir():
-	if not os.path.isdir(folder):
-		print("Odd file found in index:", folder)
-	else:
-		existingIndexFiles[folder] = os.listdir(folder)
 removed = 0
-for folder, files in existingIndexFiles.items():
-	if folder not in index:
-		for file in files:
-			os.remove(folder + "/" + file)
-			removed += 1
-		os.rmdir(folder)
+for ex_folder in os.listdir():
+	if not os.path.isdir(ex_folder):
+		print('Odd file found in index:', ex_folder)
 	else:
-		for file in files:
-			if file[:-4] not in index[folder]:
-				os.remove(folder + "/" + file)
+		existingIndexFiles[ex_folder] = os.listdir(ex_folder)
+		if not index.has_prefix(ex_folder):
+			for ex_file in existingIndexFiles[ex_folder]:
+				os.remove(ex_folder + '/' + ex_file)
 				removed += 1
+			os.rmdir(ex_folder)
+		else:
+			for ex_file in existingIndexFiles[ex_folder]:
+				if ex_file[:-4] not in index:
+					os.remove(ex_folder + '/' + ex_file)
+					removed += 1
 		
-print(removed, "file(s) culled")
+print(removed, 'file(s) culled')
+
+### UPDATE/CREATE INDEX FILES ###
 
 updated, created = 0, 0
-for folder in index:
-	for word, positions in index[folder].items():
-		fileContent = [",".join(str(x) for x in pos) for pos in positions]
-		fileName = word + ".txt"
+for letter, basenode in index._root.next:
+	if letter in string.ascii_lowercase:
+		folder = letter
+	else:
+		folder = '0'
+	for node in _node_iter(basenode):
+		word, positions = node.value
+		fileContent = [','.join(str(x) for x in pos) for pos in positions]
+		fileName = word + '.txt'
 		if folder in existingIndexFiles and fileName in existingIndexFiles[folder]:
-			existingFile = open(folder + "/" + fileName,encoding="utf-8")
+			existingFile = open(folder + '/' + fileName,encoding='utf-8')
 			i = 0
 			for line in existingFile:
 				if i >= len(fileContent) or line.strip() != fileContent[i]:
@@ -84,10 +88,10 @@ for folder in index:
 		else:
 			created += 1
 		os.makedirs(folder, exist_ok=True)
-		with open(folder + "/" + fileName,mode="w",encoding="utf-8") as indexFile:
+		with open(folder + '/' + fileName,mode='w',encoding='utf-8') as indexFile:
 			for line in fileContent:
 				print(line, file=indexFile)
 
-print(created, "file(s) created")
-print(updated, "file(s) updated")
-print("Finished building index")
+print(created, 'file(s) created')
+print(updated, 'file(s) updated')
+print('Finished building index')
