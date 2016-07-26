@@ -146,7 +146,7 @@ def _recurse_suggest(node, maxlength):
 	s.sort(key=lambda x: x[1], reverse=True)
 	s = s[:maxlength]
 	if node.hasvalue():
-		s.insert(0, node.value)
+		s.insert(0, (node.value, len(node.value)))
 	node.suggest = s[:maxlength]
 	return s
 

@@ -1,5 +1,5 @@
 import os
-from string import Template
+from string import Template, ascii_lowercase
 from trie import Trie, _node_iter
 
 def encodeWord(word):
@@ -24,7 +24,7 @@ while True:
 			for line in file:
 				for word in line.split():
 					encoded = encodeWord(word)
-					index[encoded].setdefault([]).append((chapI, pageI, wordI))
+					index.setdefault(encoded, []).append((chapI, pageI, wordI))
 					wordI += 1
 		pageI += 1
 	if pageI == 1:
@@ -47,29 +47,28 @@ for ex_folder in os.listdir():
 		print('Odd file found in index:', ex_folder)
 	else:
 		existingIndexFiles[ex_folder] = os.listdir(ex_folder)
-		if not index.has_prefix(ex_folder):
-			for ex_file in existingIndexFiles[ex_folder]:
+		files_left = False
+		for ex_file in existingIndexFiles[ex_folder]:
+			if ex_file[:-4] not in index:
 				os.remove(ex_folder + '/' + ex_file)
 				removed += 1
+			else:
+				files_left = True
+		if not files_left:
 			os.rmdir(ex_folder)
-		else:
-			for ex_file in existingIndexFiles[ex_folder]:
-				if ex_file[:-4] not in index:
-					os.remove(ex_folder + '/' + ex_file)
-					removed += 1
 		
 print(removed, 'file(s) culled')
 
 ### UPDATE/CREATE INDEX FILES ###
 
 updated, created = 0, 0
-for letter, basenode in index._root.next:
-	if letter in string.ascii_lowercase:
+for letter, basenode in index._root.next.items():
+	if letter in ascii_lowercase:
 		folder = letter
 	else:
 		folder = '0'
 	for node in _node_iter(basenode):
-		word, positions = node.value
+		word, positions = node.key, node.value
 		fileContent = [','.join(str(x) for x in pos) for pos in positions]
 		fileName = word + '.txt'
 		if folder in existingIndexFiles and fileName in existingIndexFiles[folder]:
