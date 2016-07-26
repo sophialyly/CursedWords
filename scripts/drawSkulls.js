@@ -19,8 +19,7 @@ window.addEventListener("load",function(){
 	context.strokeStyle = "#FFF";
 	
 	updateSkullDisplay();
-	markupInput.addEventListener("change",updateSkullDisplay);
-	markupInput.addEventListener("keyup",updateSkullDisplay);
+	markupInput.addEventListener("input",updateSkullDisplay);
 });
 
 function updateSkullDisplay(){

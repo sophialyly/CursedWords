@@ -27,6 +27,7 @@ body {
 }
 
 .gridElement {
+	position: relative;
 	width: 300px;
 	height: 200px;
 	margin: 20px;
@@ -54,6 +55,40 @@ textarea {
 	border: 1px solid #AAA;
 	resize: none;
 	font-family: monospace;
+	z-index: 2;
+}
+
+.suggestions {
+	display: none;
+	position: absolute;
+    top: 80%;
+    margin: 0px;
+	margin-top: -10px;
+    padding: 0px;
+	padding-top: 10px;
+    width: 100%;
+    border: 1px solid #AAA;
+    border-radius: 0px 0px 5px 5px;
+    box-sizing: border-box;
+    text-indent: 0px;
+	overflow: hidden;
+	z-index: 1;
+}
+
+textarea:focus + .suggestions {
+	display: block;
+}
+
+.suggestions li {
+	padding: 6px;
+	overflow: hidden;
+	background-color: white;
+	text-overflow: ellipsis;
+	font-family: monospace;
+}
+
+.suggestions li.selected {
+    background-color: #ECECEC;
 }
 
 button {
@@ -330,16 +365,28 @@ strong {
 	height: 100%;
 }
 
-.comicCodes .selectedRow {
-	background-color: #EEEEFF;
+.comicCodes tr:nth-child(odd) {
+    background-color: #FCFCFC;
 }
 
-.comicCodes .selectedRow .code {
+.comicCodes tr:nth-child(even) {
+    background-color: #F2F2F2;
+}
+
+.comicCodes tr.selectedRow:nth-child(odd) {
+	background-color: #F8F8FF;
+}
+
+.comicCodes tr.selectedRow:nth-child(even) {
+	background-color: #E7E7FF;
+}
+
+.comicCodes tr.selectedRow .code {
 	background-color: #CCCCFF;
 	border-color: #AAAAFF;
 }
 
-.comicCodes .selectedRow .emptyCode {
+.comicCodes tr.selectedRow .emptyCode {
 	background-color: #DDDDFF;
 	border-color: #CCCCFF;
 }

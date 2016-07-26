@@ -1,11 +1,21 @@
 var dbAddress = "https://ajaxgb.github.io/CursedWords/db/",
-	db = {index:{}}, markupInput, plainInput,
+	db = {index:{}}, markupInput, plainInput, plainSuggest,
 	manualInput, preferChaptersBelow4Input, wordRE = /\S+/g,
-	missingSkullPair = [{markup:"(X)"},{markup:"(X)"}];
+	missingSkullPair = [{markup:"(X)"},{markup:"(X)"}],
+	suggestRequest, suggest = {options:[],selected:0,setSelection:function(i){
+		if(!suggest.options)return;
+		suggest.options[suggest.selected].node.classList.remove("selected");
+		suggest.selected=i.mod(suggest.options.length);
+		suggest.options[suggest.selected].node.classList.add("selected");
+	}};
+Number.prototype.mod = function(n) {
+    return ((this % n) + n) % n;
+}
 
 window.addEventListener("load",function(){
 	markupInput = document.getElementById("markupInput");
 	plainInput = document.getElementById("plainInput");
+	plainSuggest = document.getElementById("plainSuggest");
 	manualInput = document.getElementById("manualCheck");
 	preferChaptersBelow4Input = document.getElementById("preferCh4Check");
 	
@@ -19,11 +29,29 @@ window.addEventListener("load",function(){
 
 	document.getElementById("plainButton").addEventListener("click",plainToMarkup);
 	plainInput.addEventListener("keydown",function(e){
-		if((e.key === "Enter" || e.keyCode === 13) && e.ctrlKey){
-			plainToMarkup();
-			e.preventDefault();
+		if(e.key === "Enter" || e.keyCode === 13){
+			if(e.ctrlKey)
+				plainToMarkup();
+			else if(suggest.options.length>suggest.selected){
+				insertSelection();
+			}else{
+				return;
+			}
+		}else if(e.key === "Tab" || e.keyCode === 9){
+			insertSelection();
+		}else if(e.key === "Escape" || e.keyCode === 27){
+			clearSuggestions();
+		}else if(e.key === "ArrowUp" || e.keyCode === 38){
+			suggest.setSelection(suggest.selected-1);
+		}else if(e.key === "ArrowDown" || e.keyCode === 40){
+			suggest.setSelection(suggest.selected+1);
+		}else{
+			return;
 		}
+		e.preventDefault();
 	});
+	plainInput.addEventListener("keyup",getSuggestions);
+	plainInput.addEventListener("blur",clearSuggestions);
 });
 
 function markupToPlain(){
@@ -107,6 +135,71 @@ function plainToMarkup(){
 	updateSkullDisplay();
 }
 
+function getSuggestions(){
+	var prefix = getPrefix();
+	if(prefix===suggest.prefix){
+		return;
+	}else{
+		suggest.prefix = prefix;
+	}
+	if(prefix===undefined){
+		clearSuggestions();
+		return;
+	}
+	requestSuggestions(prefix,function(prefix,suggestions){
+		clearSuggestions();
+		if(suggestions===undefined)return;
+		for(var i=0;i<suggestions.length;++i){
+			var li = document.createElement("LI");
+			var pre = document.createElement("STRONG");
+			pre.appendChild(document.createTextNode(prefix.toUpperCase()));
+			li.appendChild(pre);
+			li.appendChild(document.createTextNode(suggestions[i].substr(prefix.length).toUpperCase()));
+			li.addEventListener("mousedown",function(e){
+				suggest.setSelection(this.value);
+				console.log(this.value);
+				e.preventDefault();
+			});
+			li.addEventListener("dblclick",function(e){
+				insertSelection();
+				e.preventDefault();
+			});
+			li.value = i;
+			plainSuggest.appendChild(li);
+			suggest.options[i] = {node:li,value:suggestions[i].toUpperCase()};
+		}
+		plainSuggest.style.display = "block";
+		suggest.setSelection(0);
+	});
+}
+
+function clearSuggestions(){
+	while (plainSuggest.hasChildNodes()) {
+		plainSuggest.removeChild(plainSuggest.firstChild);
+	}
+	plainSuggest.style.display = "none";
+	suggest.options = [];
+	suggest.selected = 0;
+	suggest.prefix = getPrefix();
+}
+
+function insertSelection(){
+	var word = suggest.options[suggest.selected].value, index = plainInput.selectionEnd,
+		before = plainInput.value.substr(0,index).replace(/\S+$/,""),
+		after = plainInput.value.substr(index).replace(/^\S+/, ""),
+		newIndex = before.length + word.length + 1;
+	plainInput.value = before + word + " " + after;
+	plainInput.setSelectionRange(newIndex, newIndex);
+	clearSuggestions();
+}
+
+function getPrefix(){
+	var index = plainInput.selectionEnd;
+	if(plainInput.selectionStart!==index)return;
+	var result = /\S*$/.exec(plainInput.value.substr(0,index)) + /^\S*/.exec(plainInput.value.substr(index));
+	if(result)return result;
+}
+
 function getSkullArray(text){
 	var skullRE = /([.!]*|\uD83D\uDC52)\(([oO0.]*|[xX])\)(\d?)/g;
 	var skulls = [];
@@ -160,6 +253,41 @@ function skullPairsToString(arr){
 		}
 	}
 	return result;
+}
+
+var badCharRE = /[^A-Za-z0-9]/;
+function encodeWord(word,sep){
+	if(sep===undefined)sep = "";
+	word = word.toLowerCase();
+	fileName = sep;
+	for(var i=0;i<word.length;++i){
+		if(word.charAt(i).match(badCharRE))
+			fileName += "-" + word.charCodeAt(i) + "-";
+		else
+			fileName += word.charAt(i);
+		fileName += sep;
+	}
+	return fileName;
+}
+
+function chooseSkulls(outputArr,indices,occurences){
+	var range = -1;
+	if(preferChaptersBelow4Input.checked){
+		for(var i=occurences.length-1;i>=0;--i){
+			if(occurences[i][0] <= 4){ // chapter <= 4
+				range = i+1;
+				break;
+			}
+		}
+	}
+	if(range<0){ // pref not set, or all entries above chapter 4
+		range = occurences.length;
+	}
+	for(var i=0;i<indices.length;++i){
+		var choice = occurences[Math.floor(Math.random() * range)];
+		if(setSkullPair(outputArr, indices[i], skullPairFromCPW(choice[0],choice[1],choice[2])))
+			break;
+	}
 }
 
 // "Database" functions go here.
@@ -278,34 +406,31 @@ function requestSkulls(word,outputArr,index){
 	}
 }
 
-var badCharRE = /[^A-Za-z0-9]/;
-function encodeWord(word){
-	fileName = "";
-	for(var i=0;i<word.length;++i){
-		if(word.charAt(i).match(badCharRE))
-			fileName += "-" + word.charCodeAt(i) + "-";
-		else
-			fileName += word.charAt(i);
+function requestSuggestions(prefix,callback){
+	if(suggestRequest!=undefined && suggestRequest.prefix!=prefix){
+		suggestRequest.abort();
 	}
-	return fileName;
-}
-
-function chooseSkulls(outputArr,indices,occurences){
-	var range = -1;
-	if(preferChaptersBelow4Input.checked){
-		for(var i=occurences.length-1;i>=0;--i){
-			if(occurences[i][0] <= 4){ // chapter <= 4
-				range = i+1;
-				break;
+	var req = dbAddress+"suggest"+encodeWord(prefix,"/")+"s.txt";
+	var xhttp = new XMLHttpRequest();
+	xhttp.prefix = prefix;
+	xhttp.addEventListener("load",(function(x,c){
+		return function(){
+			if(x.status>=200 && x.status<300){ //success code
+				c(x.prefix,x.responseText.match(wordRE));
+			}else{
+				c(x.prefix);
 			}
-		}
-	}
-	if(range<0){ // pref not set, or all entries above chapter 4
-		range = occurences.length;
-	}
-	for(var i=0;i<indices.length;++i){
-		var choice = occurences[Math.floor(Math.random() * range)];
-		if(setSkullPair(outputArr, indices[i], skullPairFromCPW(choice[0],choice[1],choice[2])))
-			break;
-	}
+		};
+	})(xhttp,callback));
+	var couldNotLoad = (function(x,c){
+		return function(){
+			c(x.prefix);
+		};
+	})(xhttp,callback);
+	xhttp.addEventListener("abort",couldNotLoad);
+	xhttp.addEventListener("error",couldNotLoad);
+	xhttp.addEventListener("timeout",couldNotLoad);	
+	xhttp.open("GET", req, true);
+	suggestRequest = xhttp;
+	xhttp.send();
 }
