@@ -153,12 +153,16 @@ def _recurse_suggest(node, maxlength):
 	s = []
 	for n in node.next.values():
 		s.extend(_recurse_suggest(n, maxlength))
+	if node.hasvalue():
+		entry = (node.key, len(node.value))
+		s.append(entry)
 	# Sort first by number of entries, then alphabetically
 	s.sort(key=lambda x: (-x[1], x[0]))
 	s = s[:maxlength]
-	if node.hasvalue():
-		s.insert(0, (node.key, len(node.value)))
-	node.suggest = s[:maxlength]
+	if node.hasvalue() and entry not in s:
+		print('WARN:', node.key, 'not in own suggestions, extending', flush=True)
+		s.append(entry)
+	node.suggest = s
 	return s
 
 def _find_node(node, prefix):

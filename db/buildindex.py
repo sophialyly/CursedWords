@@ -44,7 +44,6 @@ while True:
 	print('Found chapter', chap_i, 'containing', page_i-1, 'pages', flush=True)
 	chap_i += 1
 	page_i = 1
-index.gensuggestions(10)
 
 print('Total words found:', len(index), flush=True)
 
@@ -127,6 +126,10 @@ def build_suggest(node):
 	if os.path.isfile('s.txt'):
 		with open('s.txt', encoding='utf-8') as file:
 			for ex_word, new_word in zip_longest(file, node.suggest):
+				if not ex_word:
+					needwrite = True
+					updated += 1
+					break
 				ex_word = ex_word.strip()
 				if len(ex_word) != 0 and ex_word != new_word[0]:
 					needwrite = True
@@ -160,6 +163,8 @@ def build_suggest(node):
 		os.chdir(folder)
 		build_suggest(n)
 		os.chdir(os.pardir)
+
+index.gensuggestions(10)
 
 print('Building suggestions: 0%', flush=True)
 removed, updated, created = 0, 0, 0

@@ -1,8 +1,8 @@
-q
 questions
 question
 quickly
 quit
+q
 quads
 queasy
 queries

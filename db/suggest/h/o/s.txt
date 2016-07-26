@@ -1,4 +1,3 @@
-ho
 how
 house
 hold
@@ -7,4 +6,5 @@ home
 horse
 host
 how'd
+ho
 honestly

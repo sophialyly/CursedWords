@@ -1,4 +1,4 @@
-norm
 normal
+norm
 normality
 normally
