@@ -251,7 +251,6 @@ strong {
 	min-width: 325px;
 	box-sizing: border-box;
 	margin: 10px 0px;
-	width: 62%;
 	background-color: #EEE;
 	padding: 40px;
 }
@@ -459,22 +458,19 @@ ins {
 	background-color: #B0FFB0;
 }
 
-.description .attribution {
+.attribution {
 	font-style: italic;
-	margin: 30px 5% 20px auto;
+	margin: -10px 3% 20px auto;
+	color: #222;
 	width: 90%;
 	padding: 0px;
 }
 
-.description .attribution * {
+.attribution * {
 	margin: 0px;
 	width: 100%;
 	font-size: 12px;
 	text-align: right;
-}
-
-.attribution address {
-	font-size: 14px;
 }
 
 .attribution .tiny {
