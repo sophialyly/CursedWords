@@ -211,6 +211,10 @@ hr {
 	width: 70%;
 }
 
+.description>* {
+	min-width: 300px;
+}
+
 .description h1 {
 	margin: 10px;
 	margin-bottom: 10px;
@@ -240,9 +244,11 @@ strong {
 	font-weight: bolder;
 }
 
-.tips {
+.description .tips {
 	position: relative;
 	border-radius: 10px;
+	min-width: 325px;
+	box-sizing: border-box;
 	margin: 10px;
 	width: 62%;
 	background-color: #EEE;
