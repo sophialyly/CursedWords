@@ -29,6 +29,7 @@ window.addEventListener("load",function(){
 
 	document.getElementById("plainButton").addEventListener("click",plainToMarkup);
 	plainInput.addEventListener("keydown",function(e){
+		getSuggestions();
 		if(e.key === "Enter" || e.keyCode === 13){
 			if(e.ctrlKey)
 				plainToMarkup();
@@ -189,6 +190,7 @@ function clearSuggestions(){
 }
 
 function insertSelection(){
+	if(suggest.options.length<=suggest.selected)return;
 	var word = suggest.options[suggest.selected].value, index = plainInput.selectionEnd,
 		before = plainInput.value.substr(0,index).replace(/\S+$/,""),
 		after = plainInput.value.substr(index).replace(/^\S+/, ""),
