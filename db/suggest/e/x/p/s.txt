@@ -1,9 +1,10 @@
 expecting
 explain
+expect
 experience
 expanded
-expect
+expecting'
+experts
 explains
 explanation
-exposure
-expressed
+exposed

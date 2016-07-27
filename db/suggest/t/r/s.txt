@@ -1,10 +1,10 @@
 try
 trying
 true
-trail
-trouble
 trust
+trouble
+trail
+training
+trick
+tried
 truth
-trade
-trance
-transformation

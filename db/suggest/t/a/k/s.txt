@@ -1,4 +1,5 @@
 take
+taken
+takes
 taking
 takeaway
-taken

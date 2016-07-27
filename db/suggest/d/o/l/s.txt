@@ -1,2 +1,4 @@
 doll
 dollar
+dollars
+dolphins

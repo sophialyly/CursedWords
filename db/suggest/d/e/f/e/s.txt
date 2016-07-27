@@ -1,3 +1,4 @@
 defend
-defeated
 defense
+defeated
+defending

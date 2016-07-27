@@ -1,4 +1,5 @@
 assault
+assaulting
 assembled
 assess
 assessment
@@ -6,3 +7,4 @@ assignment
 assist
 assistance
 assistant
+assume

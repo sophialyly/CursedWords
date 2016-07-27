@@ -5,6 +5,6 @@ sit
 sitting
 side
 sight
+single
+sign
 similar
-situations
-sigh

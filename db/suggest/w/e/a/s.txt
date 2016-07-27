@@ -1,5 +1,6 @@
-weapon
 weak
+weapon
 weakening
 weasel
 weather
+weave

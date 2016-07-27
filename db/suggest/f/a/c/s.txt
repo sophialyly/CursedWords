@@ -1,6 +1,7 @@
 face
 faces
 fact
+faced
 facing
 faction
 faculty

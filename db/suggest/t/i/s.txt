@@ -1,5 +1,6 @@
 time
 times
+tip
 ticked
 tied
 tight
@@ -7,4 +8,3 @@ tilt
 tilty
 timing
 tingly
-tinted

@@ -1,2 +1,3 @@
 hungry
+hunger
 hunting

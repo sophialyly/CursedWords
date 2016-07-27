@@ -1,4 +1,5 @@
 begin
 beginner
+beginner's
 beginning
 begins

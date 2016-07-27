@@ -1,3 +1,4 @@
 hand
+handed
 handle
 hands

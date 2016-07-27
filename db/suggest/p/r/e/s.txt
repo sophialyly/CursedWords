@@ -1,8 +1,10 @@
 pretty
-preach
 prefer
+pretzel
+preach
+precision
+preemptive
 premature
 prepare
 prerequisites
 present
-previously

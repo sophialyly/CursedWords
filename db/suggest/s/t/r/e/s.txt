@@ -1,4 +1,5 @@
 strength
-street
 stretched
+street
+stretch
 stretchy

@@ -6,4 +6,5 @@ checking
 cheerful
 chess
 chest
+chew
 chewing

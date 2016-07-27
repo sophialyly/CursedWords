@@ -1,1 +1,4 @@
+flags
 flar
+flavor
+flaw

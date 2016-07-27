@@ -2,5 +2,7 @@ am
 amateur
 ambulance
 ambulances
+america
 ami
+amok
 amphibian

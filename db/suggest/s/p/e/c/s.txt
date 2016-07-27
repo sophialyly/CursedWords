@@ -1,4 +1,5 @@
 spectral
+spec-shot
 spectrals
 spectacular
 spec

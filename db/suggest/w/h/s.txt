@@ -1,10 +1,10 @@
 what
 why
 when
-what's
-where
 who
 which
-whoa
-whole
+what's
+where
 whatever
+whole
+while

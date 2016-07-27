@@ -1,10 +1,10 @@
 start
+started
 stay
+stand
 star
 stars
-started
 starts
 starchman
-stays
-stack
-stages
+staring
+starting

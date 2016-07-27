@@ -1,4 +1,7 @@
+centimeters
 cents
+ceiling
+center
 ceo
 certain
 certainly

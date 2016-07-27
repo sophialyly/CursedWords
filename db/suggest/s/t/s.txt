@@ -2,9 +2,9 @@ stuff
 still
 stop
 start
+started
 stay
 store
 strange
-star
-stars
-started
+study
+stand

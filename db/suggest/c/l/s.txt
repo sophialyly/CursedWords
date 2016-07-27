@@ -5,6 +5,6 @@ closet
 clubs
 club's
 climb
+claim
 claw
 clear
-cleared

@@ -1,5 +1,7 @@
 walker
-walls
 walk
-walkie-talkie
+walls
+walker's
 wall
+walkie-talkie
+walks

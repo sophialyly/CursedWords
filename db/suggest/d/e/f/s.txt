@@ -1,6 +1,7 @@
 defend
-defeated
 defense
+definitely
+defeated
+defending
 deffibidly
 defibrillation
-definitely

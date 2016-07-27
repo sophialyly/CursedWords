@@ -1,3 +1,4 @@
+snack
 snagged
 snake
 snakes
@@ -6,5 +7,4 @@ snapping
 snark
 sneak
 snow
-snrrglemrrff
-snrrrkfzzz
+snrf

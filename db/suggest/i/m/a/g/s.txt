@@ -1,2 +1,4 @@
+image
+imaginary
 imagination
 imagining

@@ -2,3 +2,4 @@ development
 devil
 devour
 devoured
+devourer

@@ -1,2 +1,5 @@
 swing
+swings
+swift
+swig
 swingin'

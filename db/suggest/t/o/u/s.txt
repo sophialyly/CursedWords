@@ -1,4 +1,5 @@
 touch
 touched
 tour
+touching
 tough
