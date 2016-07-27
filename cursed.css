@@ -2,7 +2,7 @@ body {
 	margin: 0px;
 	width: 100%;
 	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-	background-color: white;
+	background-color: yellow;
 }
 
 .page {
@@ -12,6 +12,7 @@ body {
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: center;
+	background-color: white;
 }
 
 .content {
