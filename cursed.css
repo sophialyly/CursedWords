@@ -1,15 +1,11 @@
 body {
 	margin: 0px;
-	padding: 0px;
-	width: 100%;
 	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 	background-color: green;
 }
 
 .page {
 	height: 100%;
-	width: 100%;
-	margin: 0px;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
@@ -29,7 +25,7 @@ body {
 	flex-flow: row wrap;
 	justify-content: center;
 	flex: 1 0 auto;
-	margin: 20px;
+	margin: 20px 0px;
 }
 
 .gridElement {
@@ -208,7 +204,7 @@ hr {
 	justify-content: center;
 	align-items: center;
 	flex: none;
-	margin: 20px;
+	margin: 20px 0px;
 }
 
 .description  * {
@@ -254,7 +250,7 @@ strong {
 	border-radius: 10px;
 	min-width: 325px;
 	box-sizing: border-box;
-	margin: 10px;
+	margin: 10px 0px;
 	width: 62%;
 	background-color: #EEE;
 	padding: 40px;
@@ -306,7 +302,7 @@ strong {
     transition: max-height 0.5s, width 0.3s 0.1s;
 	max-height: 800px;
 	overflow: hidden;
-	margin: 20px;
+	margin: 20px 0px;
 	border-radius: 10px;
 	border: 1px solid #555;
 }
