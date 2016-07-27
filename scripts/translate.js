@@ -51,6 +51,7 @@ window.addEventListener("load",function(){
 		e.preventDefault();
 	});
 	plainInput.addEventListener("keyup",getSuggestions);
+	plainInput.addEventListener("click",getSuggestions);
 	plainInput.addEventListener("blur",clearSuggestions);
 });
 
