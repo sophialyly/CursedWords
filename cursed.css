@@ -1,8 +1,9 @@
 body {
 	margin: 0px;
+	padding: 0px;
 	width: 100%;
 	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-	background-color: yellow;
+	background-color: green;
 }
 
 .page {
