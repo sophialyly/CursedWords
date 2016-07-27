@@ -461,8 +461,8 @@ ins {
 
 .description .attribution {
 	font-style: italic;
-	margin-top: 30px;
-	margin-bottom: 20px;
+	margin: 30px 10% 20px auto;
+	width: 87%;
 	padding: 0px;
 }
 
