@@ -3,7 +3,7 @@ var dbAddress = "https://ajaxgb.github.io/CursedWords/db/",
 	manualInput, preferChaptersBelow4Input, wordRE = /\S+/g,
 	missingSkullPair = [{markup:"(X)"},{markup:"(X)"}],
 	suggestRequest, suggest = {options:[],selected:0,setSelection:function(i){
-		if(!suggest.options||!suggest.options[suggest.selected])return;
+		if(!suggest.options[suggest.selected])return;
 		suggest.options[suggest.selected].node.classList.remove("selected");
 		suggest.selected=i.mod(suggest.options.length);
 		suggest.options[suggest.selected].node.classList.add("selected");
@@ -37,14 +37,18 @@ window.addEventListener("load",function(){
 			}else{
 				return;
 			}
-		}else if(e.key === "Tab" || e.keyCode === 9){
-			insertSelection();
-		}else if(e.key === "Escape" || e.keyCode === 27){
-			clearSuggestions();
-		}else if(e.key === "ArrowUp" || e.keyCode === 38){
-			suggest.setSelection(suggest.selected-1);
-		}else if(e.key === "ArrowDown" || e.keyCode === 40){
-			suggest.setSelection(suggest.selected+1);
+		}else if(suggest.options.length>suggest.selected){
+			if(e.key === "Tab" || e.keyCode === 9){
+				insertSelection();
+			}else if(e.key === "ArrowUp" || e.keyCode === 38){
+				suggest.setSelection(suggest.selected-1);
+			}else if(e.key === "ArrowDown" || e.keyCode === 40){
+				suggest.setSelection(suggest.selected+1);
+			}else if(e.key === "Escape" || e.keyCode === 27){
+				clearSuggestions();
+			}else{
+				return;
+			}
 		}else{
 			return;
 		}
