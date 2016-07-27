@@ -459,17 +459,18 @@ ins {
 	background-color: #B0FFB0;
 }
 
-.attribution {
+.description .attribution {
 	font-style: italic;
-	margin-top: 30px!important;
+	margin-top: 30px;
 	margin-bottom: 20px;
+	padding: 0px;
 }
 
-.attribution * {
-	margin: 0px!important;
+.description .attribution * {
+	margin: 0px;
 	width: 100%;
 	font-size: 12px;
-	text-align: right!important;
+	text-align: right;
 }
 
 .attribution address {
