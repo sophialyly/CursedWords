@@ -297,7 +297,8 @@ strong {
 }
 
 .expandable {
-	width: 100%;
+	max-width: 700px;
+	width: 90%;
 	-webkit-transition: max-height 0.5s, width 0.3s 0.1s; /* Safari */
     transition: max-height 0.5s, width 0.3s 0.1s;
 	max-height: 800px;
@@ -406,7 +407,7 @@ strong {
 .comicCodes th,
 .comicCodes td:nth-child(1),
 .comicCodes td:nth-child(4) {
-	padding: 0px 10px;
+	padding: 0px 2px;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -440,6 +441,9 @@ strong {
 
 .copyMarkupButton {
 	height: 50px;
+	max-width: 100%;
+	padding: 5%;
+	overflow: hidden;
 }
 
 ins, del {
