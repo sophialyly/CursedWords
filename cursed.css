@@ -464,7 +464,6 @@ ins {
 	margin: 30px 5% 20px auto;
 	width: 90%;
 	padding: 0px;
-	padding-right: 5%;
 }
 
 .description .attribution * {
@@ -478,6 +477,6 @@ ins {
 	font-size: 14px;
 }
 
-.tiny {
+.attribution .tiny {
 	font-size: 2px;
 }
