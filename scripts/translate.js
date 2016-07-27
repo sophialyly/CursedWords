@@ -26,6 +26,7 @@ window.addEventListener("load",function(){
 	markupInput.addEventListener("keydown",function(e){
 		if((e.key === "Enter" || e.keyCode === 13) && e.ctrlKey){
 			markupToPlain();
+			pushQueryArgs({markup:markupInput.value.trim()});
 			e.preventDefault();
 		}
 	});
@@ -37,9 +38,10 @@ window.addEventListener("load",function(){
 	plainInput.addEventListener("keydown",function(e){
 		getSuggestions();
 		if(e.key === "Enter" || e.keyCode === 13){
-			if(e.ctrlKey)
+			if(e.ctrlKey){
 				plainToMarkup();
-			else if(suggest.options.length>suggest.selected){
+				pushQueryArgs({plain:plainInput.value.trim()});
+			}else if(suggest.options.length>suggest.selected){
 				insertSelection();
 			}else{
 				return;
