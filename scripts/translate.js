@@ -3,7 +3,7 @@ var dbAddress = "https://ajaxgb.github.io/CursedWords/db/",
 	manualInput, preferChaptersBelow4Input, wordRE = /\S+/g,
 	missingSkullPair = [{markup:"(X)"},{markup:"(X)"}],
 	suggestRequest, suggest = {options:[],selected:0,setSelection:function(i){
-		if(!suggest.options)return;
+		if(!suggest.options||!suggest.options[suggest.selected])return;
 		suggest.options[suggest.selected].node.classList.remove("selected");
 		suggest.selected=i.mod(suggest.options.length);
 		suggest.options[suggest.selected].node.classList.add("selected");
