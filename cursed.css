@@ -62,6 +62,7 @@ textarea {
 	display: none;
 	position: absolute;
     top: 80%;
+	left: 0px;
     margin: 0px;
 	margin-top: -10px;
     padding: 0px;
