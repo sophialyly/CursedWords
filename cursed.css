@@ -1,7 +1,8 @@
 body {
-	margin: 0px;
+	width: 100%;
+	margin: 0px auto;
 	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-	background-color: green;
+	background-color: white;
 }
 
 .page {
@@ -10,7 +11,6 @@ body {
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: center;
-	background-color: white;
 }
 
 .content {
@@ -32,7 +32,7 @@ body {
 	position: relative;
 	width: 300px;
 	height: 200px;
-	margin: 20px;
+	margin: 20px 0px;
 	flex: none;
 }
 
@@ -217,13 +217,13 @@ hr {
 }
 
 .description h1 {
-	margin: 10px;
+	margin: 10px 0px;
 	margin-bottom: 10px;
 	text-align: center;
 }
 
 .description p {
-	margin: 5px;
+	margin: 5px 0px;
 	text-align: justify;
 }
 
