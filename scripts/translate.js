@@ -19,7 +19,10 @@ window.addEventListener("load",function(){
 	manualInput = document.getElementById("manualCheck");
 	preferChaptersBelow4Input = document.getElementById("preferCh4Check");
 	
-	document.getElementById("markupButton").addEventListener("click",markupToPlain);
+	document.getElementById("markupButton").addEventListener("click",function(){
+		markupToPlain();
+		pushQueryArgs({markup:markupInput.value});
+	});
 	markupInput.addEventListener("keydown",function(e){
 		if((e.key === "Enter" || e.keyCode === 13) && e.ctrlKey){
 			markupToPlain();
@@ -27,7 +30,10 @@ window.addEventListener("load",function(){
 		}
 	});
 
-	document.getElementById("plainButton").addEventListener("click",plainToMarkup);
+	document.getElementById("plainButton").addEventListener("click",function(){
+		plainToMarkup();
+		pushQueryArgs({plain:plainInput.value});
+	});
 	plainInput.addEventListener("keydown",function(e){
 		getSuggestions();
 		if(e.key === "Enter" || e.keyCode === 13){
@@ -58,7 +64,42 @@ window.addEventListener("load",function(){
 	plainInput.addEventListener("keyup",getSuggestions);
 	plainInput.addEventListener("click",getSuggestions);
 	plainInput.addEventListener("blur",clearSuggestions);
+	
+	var query = getQueryArgs();
+	console.log("Query args:", query);
+	if(query.plain && query.markup){
+		plainInput.value = query.plain;
+		markupInput.value = query.markup;
+		updateSkullDisplay();
+	}else if(query.plain){
+		plainInput.value = query.plain;
+		plainToMarkup();
+	}else if(query.markup){
+		markupInput.value = query.markup;
+		updateSkullDisplay();
+		markupToPlain();
+	}
 });
+
+function getQueryArgs(query){
+	query = query || window.location.search.substring(1);
+	return query.split("&").reduce(function(prev, curr, i, arr){
+		var p = curr.split("=");
+		prev[decodeURIComponent(p[0])] = decodeURIComponent(p[1]);
+		return prev;
+	}, {});
+}
+
+function pushQueryArgs(query){
+	if(!query)return;
+	var search = "";
+	for(var prop in query){
+		search += "&"+encodeURIComponent(prop)+"="+encodeURIComponent(query[prop]);
+	}
+	var newurl = new URL(window.location.href);
+	newurl.search = "?" + search.substr(1);
+	window.history.pushState(query,"",newurl);
+}
 
 function markupToPlain(){
 	var skulls = getSkullArray(markupInput.value);
