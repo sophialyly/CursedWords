@@ -461,16 +461,25 @@ ins {
 .attribution {
 	font-style: italic;
 	margin: -10px 3% 20px auto;
+	max-width: 94%;
 	color: #222;
-	width: 90%;
 	padding: 0px;
+	text-align: right;
 }
 
 .attribution * {
 	margin: 0px;
 	width: 100%;
 	font-size: 12px;
-	text-align: right;
+}
+
+#adblock {
+	padding: 2px;
+	border-radius: 5px;
+	box-sizing: border-box;
+	display: none;
+	margin: 5px 0px;
+	background-color: #FFFF95;
 }
 
 .attribution .tiny {
