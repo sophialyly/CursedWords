@@ -473,15 +473,6 @@ ins {
 	font-size: 12px;
 }
 
-#plz {
-	padding: 2px;
-	border-radius: 5px;
-	box-sizing: border-box;
-	display: none;
-	margin: 5px 0px;
-	background-color: #FFFF95;
-}
-
 .attribution .tiny {
 	font-size: 2px;
 }
