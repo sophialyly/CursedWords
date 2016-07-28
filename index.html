@@ -369,15 +369,15 @@ VVVVVVVVVVVVV
 		<p class="tiny">thank mr skeltal</p>
 	</div>
 </div>
+</body>
 <script>
 	(function(i,s,o,z,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.onload=function(){var e=
-	document.getElementById('plz');e.parentNode.removeChild(e)};
-	s.getElementById(z).style.display='inline-block';m.parentNode.insertBefore(a,m)
-	})(window,document,'script','plz','https://www.google-analytics.com/analytics.js','ga');
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();i[r].checksum="still good";
+	a=s.createElement(o);m=s.getElementsByTagName(o)[0];a.async=1;a.onload=function(){
+	if(ga.checksum!=="still good"){console.log(ga);return}var e=document.getElementById('plz');
+	e.parentNode.removeChild(e)};a.src=g;s.getElementById(z).style.display='inline-block';
+	m.parentNode.insertBefore(a,m)})(window,document,'script','plz','https://www.google-analytics.com/analytics.js','ga');
 	ga('create', 'UA-81476628-1', 'auto');
 	ga('send', 'pageview');
 </script>
-</body>
 </html>
