@@ -68,18 +68,20 @@ window.addEventListener("load",function(){
 	plainInput.addEventListener("blur",clearSuggestions);
 	
 	var query = getQueryArgs();
-	console.log("Query args:", query);
-	if(query.plain && query.markup){
-		plainInput.value = query.plain;
-		markupInput.value = query.markup;
-		updateSkullDisplay();
-	}else if(query.plain){
-		plainInput.value = query.plain;
-		plainToMarkup();
-	}else if(query.markup){
-		markupInput.value = query.markup;
-		updateSkullDisplay();
-		markupToPlain();
+	if(Object.keys(query).length){
+		console.log("Query args:", query);
+		if(query.plain && query.markup){
+			plainInput.value = query.plain;
+			markupInput.value = query.markup;
+			updateSkullDisplay();
+		}else if(query.plain){
+			plainInput.value = query.plain;
+			plainToMarkup();
+		}else if(query.markup){
+			markupInput.value = query.markup;
+			updateSkullDisplay();
+			markupToPlain();
+		}
 	}
 });
 
