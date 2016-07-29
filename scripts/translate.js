@@ -205,6 +205,7 @@ function getSuggestions(){
 		return;
 	}
 	requestSuggestions(prefix,function(prefix,suggestions){
+		if(prefix!==getPrefix())return;
 		clearSuggestions();
 		if(suggestions===undefined)return;
 		for(var i=0;i<suggestions.length;++i){
