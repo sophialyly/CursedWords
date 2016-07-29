@@ -20,26 +20,22 @@ window.addEventListener("load",function(){
 	preferChaptersBelow4Input = document.getElementById("preferCh4Check");
 	
 	document.getElementById("markupButton").addEventListener("click",function(){
-		pushQueryArgs({markup:markupInput.value.trim()});
 		markupToPlain();
 	});
 	markupInput.addEventListener("keydown",function(e){
 		if((e.key === "Enter" || e.keyCode === 13) && e.ctrlKey){
-			pushQueryArgs({markup:markupInput.value.trim()});
 			markupToPlain();
 			e.preventDefault();
 		}
 	});
 
 	document.getElementById("plainButton").addEventListener("click",function(){
-		pushQueryArgs({plain:plainInput.value.trim()});
 		plainToMarkup();
 	});
 	plainInput.addEventListener("keydown",function(e){
 		getSuggestions();
 		if(e.key === "Enter" || e.keyCode === 13){
 			if(e.ctrlKey){
-				pushQueryArgs({plain:plainInput.value.trim()});
 				plainToMarkup();
 			}else if(suggest.options.length>suggest.selected){
 				insertSelection();
@@ -278,6 +274,7 @@ function setPlainWord(outputArr,index,value){
 		plainInput.value = outputArr.join(" ");
 	}
 	if(++(outputArr.filled)>=outputArr.length){
+		pushQueryArgs({markup:markupInput.value.trim()});
 		return true;
 	}
 	return false;
@@ -288,6 +285,7 @@ function setSkullPair(outputArr,index,skullpair){
 	markupInput.value = skullPairsToString(outputArr);
 	updateSkullDisplay();
 	if(++(outputArr.filled)>=outputArr.length){
+		pushQueryArgs({plain:plainInput.value.trim()});
 		return true;
 	}
 	return false;
