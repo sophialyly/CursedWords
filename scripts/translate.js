@@ -20,27 +20,27 @@ window.addEventListener("load",function(){
 	preferChaptersBelow4Input = document.getElementById("preferCh4Check");
 	
 	document.getElementById("markupButton").addEventListener("click",function(){
-		markupToPlain();
 		pushQueryArgs({markup:markupInput.value.trim()});
+		markupToPlain();
 	});
 	markupInput.addEventListener("keydown",function(e){
 		if((e.key === "Enter" || e.keyCode === 13) && e.ctrlKey){
-			markupToPlain();
 			pushQueryArgs({markup:markupInput.value.trim()});
+			markupToPlain();
 			e.preventDefault();
 		}
 	});
 
 	document.getElementById("plainButton").addEventListener("click",function(){
-		plainToMarkup();
 		pushQueryArgs({plain:plainInput.value.trim()});
+		plainToMarkup();
 	});
 	plainInput.addEventListener("keydown",function(e){
 		getSuggestions();
 		if(e.key === "Enter" || e.keyCode === 13){
 			if(e.ctrlKey){
-				plainToMarkup();
 				pushQueryArgs({plain:plainInput.value.trim()});
+				plainToMarkup();
 			}else if(suggest.options.length>suggest.selected){
 				insertSelection();
 			}else{
@@ -85,6 +85,15 @@ window.addEventListener("load",function(){
 	}
 });
 
+window.addEventListener("popstate",function(e){
+	if(e.state){
+		plainInput.value = e.state.plain;
+		markupInput.value = e.state.markup;
+	}else{
+		plainInput.value = markupInput.value = "";
+	}
+});
+
 function getQueryArgs(query){
 	query = query || window.location.search.substring(1);
 	if(!query) return {};
@@ -103,7 +112,7 @@ function pushQueryArgs(query){
 	}
 	var newurl = new URL(window.location.href);
 	newurl.search = "?" + search.substr(1);
-	window.history.pushState(query,"",newurl);
+	window.history.pushState({plain:plainInput.value,markup:markupInput.value},"",newurl);
 }
 
 function markupToPlain(){
