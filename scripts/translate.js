@@ -275,6 +275,7 @@ function setPlainWord(outputArr,index,value){
 		plainInput.value = outputArr.join(" ");
 	}
 	if(++(outputArr.filled)>=outputArr.length){
+		console.log(outputArr,index,value,markupInput.value,plainInput.value);
 		pushQueryArgs({markup:markupInput.value.trim()});
 		return true;
 	}
