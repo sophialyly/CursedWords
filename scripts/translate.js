@@ -88,6 +88,7 @@ window.addEventListener("popstate",function(e){
 	}else{
 		plainInput.value = markupInput.value = "";
 	}
+	updateSkullDisplay();
 });
 
 function getQueryArgs(query){
