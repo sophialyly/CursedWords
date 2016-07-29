@@ -123,6 +123,11 @@ function markupToPlain(){
 	}
 	for(var i=1;i<skulls.length;i+=2){ // By twos
 		var skull1 = skulls[i-1], skull2 = skulls[i];
+		markupInput.value += skull1.markup+" "+skull2.markup;
+		if(i<skulls.length-2){
+			if(i%4==1) markupInput.value += "  ";
+			else markupInput.value += "\n";
+		}
 		if(skull1.missing || skull2.missing){
 			if(manualInput.checked){
 				plainInput.value += "{NOTFOUND} ";
@@ -149,11 +154,6 @@ function markupToPlain(){
 				outputArr[(i-1)/2] = errStr;
 				requestWord(chapter,page,word,outputArr,(i-1)/2);
 			}
-		}
-		markupInput.value += skull1.markup+" "+skull2.markup;
-		if(i<skulls.length-2){
-			if(i%4==1) markupInput.value += "  ";
-			else markupInput.value += "\n";
 		}
 	}
 	if(skulls.length%2!=0){
