@@ -1,9 +1,11 @@
 {
 	"name": "Cursed Spirit Language Translator",
 	"short_name": "Cursed Words",
+	"description": "Automate translations to and from Paranatural's dark spirit language.",
 	"display": "standalone",
 	"start_url": "index.html",
 	"background_color": "#404260",
+	"theme_color": "#000000",
 	"icons": [
 		{
 			"src": "icon/android-chrome-36x36.png",
