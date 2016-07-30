@@ -1,7 +1,9 @@
 {
 	"name": "Cursed Spirit Language Translator",
+	"short_name": "Cursed Words",
 	"display": "standalone",
 	"start_url": "index.html",
+	"background_color": "#404260",
 	"icons": [
 		{
 			"src": "icon/android-chrome-36x36.png",
