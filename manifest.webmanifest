@@ -1,11 +1,8 @@
 {
 	"name": "Cursed Spirit Language Translator",
-	"short_name": "Cursed Words",
-	"description": "Automate translations to and from the Cursed Language from Paranatural.",
 	"display": "standalone",
 	"background_color": "#FFFFFF",
 	"theme_color", "#000000",
-	"scope": "/CursedWords/",
 	"start_url": "index.html",
 	"icons": [
 		{
